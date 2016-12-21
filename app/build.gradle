@@ -31,5 +31,5 @@ dependencies {
     })
     compile 'com.android.support:appcompat-v7:25.0.1'
     testCompile 'junit:junit:4.12'
-    compile 'com.github.714273725:glibrary:0.0.1'
+    compile project(':glibrary')
 }

@@ -20,9 +20,6 @@ properties.load(project.rootProject.file('local.properties').newDataInputStream(
 allprojects {
     repositories {
         jcenter()
-        maven {
-            url 'https://bintray.com/gejianye008/GLibrary/'
-        }
         mavenCentral()
     }
 }
