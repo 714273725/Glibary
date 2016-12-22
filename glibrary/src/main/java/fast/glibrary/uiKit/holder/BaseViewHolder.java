@@ -57,6 +57,17 @@ public class BaseViewHolder<T extends View> {
     }
 
     /**
+     * setVisibility
+     *
+     * @param v
+     * @return {@link View#setVisibility(int)}
+     */
+    public BaseViewHolder setVisibility(boolean v) {
+        mView.setVisibility(v ? View.VISIBLE : View.GONE);
+        return this;
+    }
+
+    /**
      * setSelected
      *
      * @param selected
@@ -143,6 +154,7 @@ public class BaseViewHolder<T extends View> {
 
     /**
      * setText
+     *
      * @param id
      * @return {@link BaseViewHolder#setText(int, boolean)}
      */
@@ -153,6 +165,7 @@ public class BaseViewHolder<T extends View> {
 
     /**
      * setText
+     *
      * @param id
      * @param format 是否从string资源中寻找适合的资源,true为从string中寻找
      * @return ViewHolder

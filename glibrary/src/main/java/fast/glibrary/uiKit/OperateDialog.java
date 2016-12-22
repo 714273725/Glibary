@@ -27,7 +27,6 @@ public class OperateDialog extends BaseDialog {
      * @param context
      * @param layoutRes
      * @param operateListener
-     * @param ids             控件的id
      */
     public OperateDialog(Activity context, @LayoutRes int layoutRes, BaseDialogOperateListener operateListener) {
         this(context, layoutRes);

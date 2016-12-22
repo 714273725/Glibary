@@ -2,6 +2,7 @@ package com.administrator.gdemo;
 
 import android.app.Application;
 
+import fast.glibrary.base.adapter.BaseAdapter;
 import fast.glibrary.tools.GLibraryHelper;
 
 /**

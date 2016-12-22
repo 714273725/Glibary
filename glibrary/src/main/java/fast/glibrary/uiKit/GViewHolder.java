@@ -2,8 +2,11 @@ package fast.glibrary.uiKit;
 
 import android.support.annotation.IdRes;
 import android.support.annotation.StringRes;
+import android.support.v7.widget.RecyclerView;
 import android.util.SparseArray;
 import android.view.View;
+
+import java.lang.reflect.InvocationTargetException;
 
 import fast.glibrary.uiKit.holder.BaseViewHolder;
 
@@ -16,20 +19,19 @@ import fast.glibrary.uiKit.holder.BaseViewHolder;
  * 修改时间：2016/12/20 9:54
  * 修改备注：
  */
-public class GViewHolder {
+public class GViewHolder extends RecyclerView.ViewHolder {
     private SparseArray<BaseViewHolder> mViewList;
-    private View mRootView;
 
     public GViewHolder(View itemView) {
-        this.mRootView = itemView;
+        super(itemView);
         this.mViewList = new SparseArray<>();
-    }
 
+    }
 
     public <T extends View> BaseViewHolder getViewHolder(@IdRes int id) {
         BaseViewHolder<T> holder = mViewList.get(id);
         if (holder == null) {
-            holder = new BaseViewHolder<>((T) mRootView.findViewById(id));
+            holder = new BaseViewHolder<>((T) itemView.findViewById(id));
             mViewList.put(id, holder);
         }
         return holder;
@@ -51,6 +53,16 @@ public class GViewHolder {
         return this;
     }
 
+    /**
+     * setVisibility
+     *
+     * @param v
+     * @return {@link View#setVisibility(int)}
+     */
+    public GViewHolder setVisibility(@IdRes int id,boolean v) {
+        getViewHolder(id).setVisibility(v ? View.VISIBLE : View.GONE);
+        return this;
+    }
     /**
      * setVisibility
      *

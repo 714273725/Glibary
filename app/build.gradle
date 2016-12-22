@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-
+apply plugin: 'me.tatarka.retrolambda'
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.1"
@@ -15,7 +15,10 @@ android {
         preDexLibraries = false
         javaMaxHeapSize "2g" // 2g should be also OK
     }
-
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
     buildTypes {
         release {
             minifyEnabled false
