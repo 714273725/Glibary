@@ -25,7 +25,6 @@ public class GViewHolder extends RecyclerView.ViewHolder {
     public GViewHolder(View itemView) {
         super(itemView);
         this.mViewList = new SparseArray<>();
-
     }
 
     public <T extends View> BaseViewHolder getViewHolder(@IdRes int id) {

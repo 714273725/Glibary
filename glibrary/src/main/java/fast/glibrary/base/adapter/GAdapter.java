@@ -15,12 +15,12 @@ import fast.glibrary.uiKit.GViewHolder;
  * 修改时间：2016/12/22 12:57
  * 修改备注：
  */
-public class DefaultAdapter<T> extends BaseAdapter<T, GViewHolder> {
-    public DefaultAdapter(int defaultLayoutId) {
+public class GAdapter<T> extends BaseAdapter<T, GViewHolder> {
+    public GAdapter(int defaultLayoutId) {
         super(defaultLayoutId);
     }
 
-    public DefaultAdapter(List<T> data) {
+    public GAdapter(List<T> data) {
         super(data);
     }
 
