@@ -31,20 +31,14 @@ public abstract class BaseAdapter<T, K extends GViewHolder> extends RecyclerView
     List<T> mShowList;
     SparseArray<Integer> header;
     SparseArray<Integer> footer;
-    AdapterBinder<T, K> mBindDataListener;
-    DataFilter<T,K> mDataFilter;
+    DataFilter<T, K> mDataFilter;
     private int mDefaultLayoutId = DefaultLayoutNoInit;
+
+
 
     {
         header = new SparseArray<>();
         footer = new SparseArray<>();
-    }
-
-    public BaseAdapter(List<T> mData, AdapterBinder<T, K> mBindDataListener, int mDefaultLayoutId) {
-        this.mData = mData;
-        this.mBindDataListener = mBindDataListener;
-        this.mDefaultLayoutId = mDefaultLayoutId;
-        init();
     }
 
     public BaseAdapter(int defaultLayoutId) {
@@ -52,18 +46,6 @@ public abstract class BaseAdapter<T, K extends GViewHolder> extends RecyclerView
         if (mData == null) {
             mData = new ArrayList<T>();
         }
-        init();
-    }
-
-    public BaseAdapter(int mDefaultLayoutId, AdapterBinder<T, K> mBindDataListener) {
-        this.mDefaultLayoutId = mDefaultLayoutId;
-        this.mBindDataListener = mBindDataListener;
-        init();
-    }
-
-    public BaseAdapter(List<T> mData, AdapterBinder<T, K> mBindDataListener) {
-        this.mData = mData;
-        this.mBindDataListener = mBindDataListener;
         init();
     }
 
@@ -75,8 +57,14 @@ public abstract class BaseAdapter<T, K extends GViewHolder> extends RecyclerView
     private void init() {
         this.mShowList = filter(mData);
     }
+    public List<T> getShowList() {
+        return mShowList;
+    }
+    public int getDefaultLayoutId() {
+        return mDefaultLayoutId;
+    }
 
-    public void setDataFilter(DataFilter<T,K> dataFilter) {
+    public void setDataFilter(DataFilter<T, K> dataFilter) {
         this.mDataFilter = dataFilter;
     }
 
@@ -105,11 +93,6 @@ public abstract class BaseAdapter<T, K extends GViewHolder> extends RecyclerView
         mData.remove(item);
         mShowList.remove(pos);
         notifyItemRemoved(getListSize(header) + pos);
-    }
-
-    public BaseAdapter setBindDataListener(AdapterBinder<T, K> bindDataListener) {
-        this.mBindDataListener = bindDataListener;
-        return this;
     }
 
     public List<T> filter(List<T> source) {
@@ -169,26 +152,13 @@ public abstract class BaseAdapter<T, K extends GViewHolder> extends RecyclerView
     @Override
     public void onBindViewHolder(K holder, int position) {
         if (header.size() > 0 && position < header.size()) {
-            if (!bindHeader(holder, getItemViewType(position))) {
-                if (mBindDataListener != null) {
-                    mBindDataListener
-                            .bindData(getItemViewType(position), null, holder, position - header.size(), mShowList);
-                }
-            }
+            bindHeader(holder, getItemViewType(position));
         } else if (footer.size() > 0 && position >= mShowList.size()) {
-            if (!bindFooter(holder, getItemViewType(position))) {
-                if (mBindDataListener != null) {
-                    mBindDataListener
-                            .bindData(getItemViewType(position), null, holder, position - header.size(), mShowList);
-                }
-            }
+            bindFooter(holder, getItemViewType(position));
         } else {
-            if (!bindView(holder, mShowList.get(position - header.size()), position - header.size())) {
-                if (mBindDataListener != null) {
-                    mBindDataListener
-                            .bindData(getItemViewType(position), mShowList.get(position - header.size()), holder, position - header.size(), mShowList);
-                }
-            }
+            bindView(holder,
+                    mShowList.get(position - header.size()),
+                    position - header.size());
         }
     }
 
