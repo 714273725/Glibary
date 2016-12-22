@@ -35,6 +35,7 @@ public class GAdapter<T> extends BaseAdapter<T, GViewHolder> {
     public boolean bindView(GViewHolder holder, T t, int pos) {
         if (mDataBinder != null) {
             mDataBinder.bindData(getDefaultLayoutId(), t, holder, pos, getShowList());
+            return true;
         }
         return super.bindView(holder, t, pos);
     }
@@ -43,6 +44,7 @@ public class GAdapter<T> extends BaseAdapter<T, GViewHolder> {
     public boolean bindFooter(GViewHolder holder, int footerId) {
         if (mDataBinder != null) {
             mDataBinder.bindData(getDefaultLayoutId(), null, holder, -1, getShowList());
+            return true;
         }
         return super.bindFooter(holder, footerId);
     }
@@ -51,6 +53,7 @@ public class GAdapter<T> extends BaseAdapter<T, GViewHolder> {
     public boolean bindHeader(GViewHolder holder, int headerId) {
         if (mDataBinder != null) {
             mDataBinder.bindData(getDefaultLayoutId(), null, holder, -1, getShowList());
+            return true;
         }
         return super.bindHeader(holder, headerId);
     }

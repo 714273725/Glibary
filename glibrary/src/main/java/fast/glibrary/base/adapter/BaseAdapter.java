@@ -34,8 +34,6 @@ public abstract class BaseAdapter<T, K extends GViewHolder> extends RecyclerView
     DataFilter<T, K> mDataFilter;
     private int mDefaultLayoutId = DefaultLayoutNoInit;
 
-
-
     {
         header = new SparseArray<>();
         footer = new SparseArray<>();
