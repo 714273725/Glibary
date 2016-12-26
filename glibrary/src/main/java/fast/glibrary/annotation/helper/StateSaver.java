@@ -25,6 +25,8 @@ import fast.glibrary.annotation.SaveState;
  * 修改备注：
  */
 public class StateSaver {
+    public static String INSTANCE_STATE = "INSTANCE_STATE";
+
     public static void saveStatue(Object target, Bundle bundle) {
         if (bundle == null) {
             return;

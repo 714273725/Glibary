@@ -18,6 +18,8 @@ import fast.glibrary.annotation.SaveState;
  * 修改备注：
  */
 public class StateBinder {
+    public static String INSTANCE_STATE="INSTANCE_STATE";
+
     public static void bindState(Object target, Bundle source) {
         if (source == null) {
             return;

@@ -7,14 +7,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import fast.glibrary.exception.ErrorUesException;
 import fast.glibrary.uiKit.GViewHolder;
-import fast.glibrary.uiKit.ViewTypeUnit;
+import fast.glibrary.uiKit.Layout;
 
 /**
  * 项目名称：GDemo
@@ -32,13 +31,18 @@ public abstract class BaseAdapter<T, K extends GViewHolder> extends RecyclerView
     SparseArray<Integer> header;
     SparseArray<Integer> footer;
     DataFilter<T, K> mDataFilter;
+    SparseArray<Layout> mViewType;
     private int mDefaultLayoutId = DefaultLayoutNoInit;
-
     {
         header = new SparseArray<>();
         footer = new SparseArray<>();
+        mViewType = new SparseArray<>();
     }
-
+    public BaseAdapter(int mDefaultLayoutId, List<T> mData) {
+        this.mDefaultLayoutId = mDefaultLayoutId;
+        this.mData = mData;
+        init();
+    }
     public BaseAdapter(int defaultLayoutId) {
         this.mDefaultLayoutId = defaultLayoutId;
         if (mData == null) {
@@ -55,9 +59,13 @@ public abstract class BaseAdapter<T, K extends GViewHolder> extends RecyclerView
     private void init() {
         this.mShowList = filter(mData);
     }
+    public List<T> getData() {
+        return mData;
+    }
     public List<T> getShowList() {
         return mShowList;
     }
+
     public int getDefaultLayoutId() {
         return mDefaultLayoutId;
     }
@@ -106,30 +114,38 @@ public abstract class BaseAdapter<T, K extends GViewHolder> extends RecyclerView
         return list;
     }
 
-
+    /**
+     * @param headId == viewType,存的时候key为 headId -1
+     */
     public void addHeader(@LayoutRes int headId) {
         addHeader(headId, headId);
     }
 
-    public void addFooter(int key, @LayoutRes int footerId) {
-        if (footer.get(key) == footerId) {
-            throw new ErrorUesException("不能添加两个相同key的脚布局");
-        }
-        footer.put(key, footerId);
+    /**
+     * @param footerId == viewType,存的时候key为 footerId +1
+     */
+    public void addFooter(@LayoutRes int footerId) {
+        addFooter(footerId, footerId);
     }
 
-    public void addHeader(int key, @LayoutRes int headId) {
-        if (header.get(key) == null) {
-            header.put(key, headId);
+    private void addFooter(int key, @LayoutRes int footerId) {
+        if (footer.get(key + 1) == null) {
+            footer.put(key + 1, footerId);
         } else {
-            if (header.get(key) == headId) {
-                throw new ErrorUesException("不能添加两个相同key的头布局");
+            if (footer.get(key + 1) == footerId) {
+                throw new ErrorUesException("不能添加两个相同key的脚布局");
             }
         }
     }
 
-    public void addFooter(@LayoutRes int footerId) {
-        addFooter(footerId, footerId);
+    private void addHeader(int key, @LayoutRes int headId) {
+        if (header.get(key - 1) == null) {
+            header.put(key - 1, headId);
+        } else {
+            if (header.get(key - 1) == headId) {
+                throw new ErrorUesException("不能添加两个相同key的头布局");
+            }
+        }
     }
 
 
@@ -137,21 +153,50 @@ public abstract class BaseAdapter<T, K extends GViewHolder> extends RecyclerView
     public K onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(viewType, parent, false);
+
         K holder = getHolder(view);
+        /**
+         * 存的时候key=viewType-1，所以在取的时候key=viewType+1
+         */
+        if (header.get(viewType - 1) != null) {
+            onCreatingHeader(holder,viewType);
+        } else
+        /**
+         * 存的时候key=viewType+1，所以在取的时候key=viewType-1
+         */
+            if (footer.get(viewType + 1) != null) {
+                onCreatingFooter(holder,viewType);
+            } else {
+                onCreatingHolder(holder,viewType);
+            }
         return holder;
     }
 
+    public void onCreatingHeader(K holder,int viewType) {
+
+    }
+
+    public void onCreatingFooter(K holder,int viewType) {
+
+    }
+
+
+    public void onCreatingHolder(K holder,int viewType) {
+
+    }
+
+
     public abstract K getHolder(View view);
 
-    public ViewTypeUnit getViewType(T t) {
+    public Layout getLayout(T t) {
         return null;
     }
 
     @Override
     public void onBindViewHolder(K holder, int position) {
-        if (header.size() > 0 && position < header.size()) {
+        if (getListSize(header) > 0 && position < getListSize(header)) {
             bindHeader(holder, getItemViewType(position));
-        } else if (footer.size() > 0 && position >= mShowList.size()) {
+        } else if (getListSize(footer) > 0 && position >= mShowList.size()) {
             bindFooter(holder, getItemViewType(position));
         } else {
             bindView(holder,
@@ -187,12 +232,12 @@ public abstract class BaseAdapter<T, K extends GViewHolder> extends RecyclerView
         } else if (getListSize(footer) > 0 && position >= getListSize(mShowList)) {
             return footer.get(footer.keyAt(position - mShowList.size() - header.size()));
         }
-        if (getViewType(mShowList.get(position - header.size())) == null
+        if (getLayout(mShowList.get(position - header.size())) == null
                 && mDefaultLayoutId == DefaultLayoutNoInit) {
             throw new ErrorUesException("必须重写getViewType()方法 或初始化一个默认的layout id");
         }
-        if (getViewType(mShowList.get(position - header.size())) != null) {
-            return getViewType(mShowList.get(position - header.size())).getViewTypeId();
+        if (getLayout(mShowList.get(position - header.size())) != null) {
+            return getLayout(mShowList.get(position - header.size())).getViewTypeId();
         }
         return mDefaultLayoutId;
     }

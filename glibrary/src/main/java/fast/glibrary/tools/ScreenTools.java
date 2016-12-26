@@ -79,4 +79,20 @@ public class ScreenTools {
         };
 
     }
+
+    /**
+     * dp to px(pixel)
+     */
+    public static int dp2px(float dpValue) {
+        final float scale = GLibraryHelper.getContext().getResources().getDisplayMetrics().density;
+        return (int) (dpValue * scale + 0.5f);
+    }
+
+    /**
+     * px(pixel) to dp
+     */
+    public static int px2dp(float pxValue) {
+        final float scale = GLibraryHelper.getContext().getResources().getDisplayMetrics().density;
+        return (int) (pxValue / scale + 0.5f);
+    }
 }

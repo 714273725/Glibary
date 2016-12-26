@@ -8,6 +8,7 @@ import android.view.View;
 
 import java.lang.reflect.InvocationTargetException;
 
+import fast.glibrary.base.adapter.GAdapter;
 import fast.glibrary.uiKit.holder.BaseViewHolder;
 
 /**
@@ -40,6 +41,20 @@ public class GViewHolder extends RecyclerView.ViewHolder {
         return (T) getViewHolder(id).get();
     }
 
+    public RecyclerView getRecyclerView(@IdRes int id) {
+        return getView(id);
+    }
+
+    public GAdapter getGAdapter(@IdRes int id) {
+        RecyclerView view = getView(id);
+        if (view != null && view instanceof RecyclerView) {
+            if (view.getAdapter() instanceof GAdapter) {
+                return (GAdapter) view.getAdapter();
+            }
+        }
+        return null;
+    }
+
     /**
      * setEnable
      *
@@ -58,10 +73,11 @@ public class GViewHolder extends RecyclerView.ViewHolder {
      * @param v
      * @return {@link View#setVisibility(int)}
      */
-    public GViewHolder setVisibility(@IdRes int id,boolean v) {
+    public GViewHolder setVisibility(@IdRes int id, boolean v) {
         getViewHolder(id).setVisibility(v ? View.VISIBLE : View.GONE);
         return this;
     }
+
     /**
      * setVisibility
      *

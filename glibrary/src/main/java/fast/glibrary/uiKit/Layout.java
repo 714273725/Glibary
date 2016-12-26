@@ -9,7 +9,7 @@ package fast.glibrary.uiKit;
  * 修改时间：2016/12/22 9:23
  * 修改备注：
  */
-public class ViewTypeUnit {
+public class Layout {
     private String mMark;
 
     public int getViewTypeId() {
@@ -22,7 +22,7 @@ public class ViewTypeUnit {
 
     private int mViewTypeId;
 
-    public ViewTypeUnit(String mark, int viewTypeId) {
+    public Layout(String mark, int viewTypeId) {
         this.mMark = mark;
         this.mViewTypeId = viewTypeId;
     }

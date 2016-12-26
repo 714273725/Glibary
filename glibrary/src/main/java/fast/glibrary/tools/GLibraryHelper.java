@@ -3,6 +3,8 @@ package fast.glibrary.tools;
 import android.app.Application;
 import android.content.Context;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
+
 /**
  * 项目名称：GDemo
  * 类描述：
@@ -35,5 +37,6 @@ public class GLibraryHelper {
         }
         L.setTag(context.getPackageName());
         mContext = context;
+        Fresco.initialize(context);
     }
 }

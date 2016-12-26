@@ -16,7 +16,17 @@ import fast.glibrary.uiKit.GViewHolder;
  * 修改备注：
  */
 public class GAdapter<T> extends BaseAdapter<T, GViewHolder> {
+
+
     GBinder<T> mDataBinder;
+
+    public void setDataBinder(GBinder<T> dataBinder) {
+        this.mDataBinder = dataBinder;
+    }
+
+    public GAdapter(int mDefaultLayoutId, List<T> mData) {
+        super(mDefaultLayoutId, mData);
+    }
 
     public GAdapter(int defaultLayoutId) {
         super(defaultLayoutId);
@@ -34,7 +44,7 @@ public class GAdapter<T> extends BaseAdapter<T, GViewHolder> {
     @Override
     public boolean bindView(GViewHolder holder, T t, int pos) {
         if (mDataBinder != null) {
-            mDataBinder.bindData(getDefaultLayoutId(), t, holder, pos, getShowList());
+            mDataBinder.bindData(getLayout(t) == null ? getDefaultLayoutId() : getLayout(t).getViewTypeId(), t, holder, pos, getShowList());
             return true;
         }
         return super.bindView(holder, t, pos);
@@ -43,7 +53,7 @@ public class GAdapter<T> extends BaseAdapter<T, GViewHolder> {
     @Override
     public boolean bindFooter(GViewHolder holder, int footerId) {
         if (mDataBinder != null) {
-            mDataBinder.bindData(getDefaultLayoutId(), null, holder, -1, getShowList());
+            mDataBinder.bindData(footerId, null, holder, -1, getShowList());
             return true;
         }
         return super.bindFooter(holder, footerId);
@@ -52,7 +62,7 @@ public class GAdapter<T> extends BaseAdapter<T, GViewHolder> {
     @Override
     public boolean bindHeader(GViewHolder holder, int headerId) {
         if (mDataBinder != null) {
-            mDataBinder.bindData(getDefaultLayoutId(), null, holder, -1, getShowList());
+            mDataBinder.bindData(headerId, null, holder, -1, getShowList());
             return true;
         }
         return super.bindHeader(holder, headerId);

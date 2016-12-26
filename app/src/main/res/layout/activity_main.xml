@@ -11,11 +11,10 @@
               android:paddingRight="@dimen/activity_horizontal_margin"
               android:paddingTop="@dimen/activity_vertical_margin"
               tools:context="com.administrator.gdemo.MainActivity">
-
-    <fast.glibrary.views.TextIndentEditText
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        app:itemSuf="@string/app_name"/>
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/siv"
+        android:layout_width="60dp"
+        android:layout_height="60dp"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvList"
