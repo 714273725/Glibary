@@ -4,31 +4,34 @@
         <attr name="itemSuf" format="reference"/>
     </declare-styleable>
 
-    <declare-styleable name="BaseItemView">
-        <attr name="itemType" format="integer"/>
-        <attr name="itemNum" format="integer"/>
-        <attr name="itemIndex" format="integer"/>
-        <attr name="itemCount" format="integer"/>
-        <attr name="itemMax" format="integer"/>
-        <attr name="itemMin" format="integer"/>
-        <attr name="itemFloat" format="float"/>
-        <attr name="itemBool" format="boolean"/>
-        <attr name="itemCheck" format="boolean"/>
-        <attr name="itemName" format="string"/>
-        <attr name="itemHint" format="string"/>
-        <attr name="itemTitle" format="string"/>
-        <attr name="itemContent" format="string"/>
-        <attr name="itemDetail" format="string"/>
-        <attr name="itemDescription" format="string"/>
-        <attr name="itemIcon" format="reference"/>
-        <attr name="itemColor" format="reference"/>
-        <attr name="itemBg" format="reference"/>
-        <attr name="itemChildColor" format="reference"/>
-        <attr name="itemRes" format="reference"/>
-        <attr name="itemVisible" format="reference"/>
-        <attr name="itemChildVisible" format="reference"/>
+    <declare-styleable name="BaseItem">
+        <attr name="gType" format="integer"/>
+        <attr name="gNum" format="integer"/>
+        <attr name="gIndex" format="integer"/>
+        <attr name="gCount" format="integer"/>
+        <attr name="gMax" format="integer"/>
+        <attr name="gMin" format="integer"/>
+        <attr name="gFloat" format="float"/>
+        <attr name="gBool" format="boolean"/>
+        <attr name="gCheck" format="boolean"/>
+        <attr name="gName" format="string"/>
+        <attr name="gHint" format="string"/>
+        <attr name="gTitle" format="string"/>
+        <attr name="gContent" format="string"/>
+        <attr name="gDetail" format="string"/>
+        <attr name="gDescription" format="string"/>
+        <attr name="gIcon" format="reference"/>
+        <attr name="gColor" format="reference"/>
+        <attr name="gBg" format="reference"/>
+        <attr name="gChildColor" format="reference"/>
+        <attr name="gRes" format="reference"/>
+        <attr name="gItemVisible" format="reference"/>
+        <attr name="gItemChildVisible" format="reference"/>
         <attr name="android:inputType"/>
         <attr name="android:minLines"/>
         <attr name="android:maxLines"/>
+    </declare-styleable>
+    <declare-styleable name="GItem">
+        <attr name="type" format="integer"/>
     </declare-styleable>
 </resources>

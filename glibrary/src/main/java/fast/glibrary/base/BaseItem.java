@@ -32,7 +32,7 @@ import fast.glibrary.annotation.helper.StateSaver;
 /**
  * Created by XY on 2016-08-08.
  */
-public abstract class BaseItemView extends RelativeLayout {
+public abstract class BaseItem extends RelativeLayout {
 
     private SparseArray<View> viewList;
     @SaveState
@@ -97,48 +97,48 @@ public abstract class BaseItemView extends RelativeLayout {
     @SaveState
     protected int layoutId = R.layout.layout_blank;
 
-    public BaseItemView(Context context) {
+    public BaseItem(Context context) {
         super(context, null);
     }
 
-    public BaseItemView(Context context, AttributeSet attrs) {
+    public BaseItem(Context context, AttributeSet attrs) {
         super(context, attrs);
         viewList = new SparseArray<>();
 
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.BaseItemView);
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.BaseItem);
 
-        itemNum = a.getInt(R.styleable.BaseItemView_itemNum, 0);
-        itemCount = a.getInt(R.styleable.BaseItemView_itemCount, 0);
-        itemIndex = a.getInt(R.styleable.BaseItemView_itemIndex, 0);
-        itemBool = a.getBoolean(R.styleable.BaseItemView_itemBool, false);
-        itemCheck = a.getBoolean(R.styleable.BaseItemView_itemCheck, false);
-        itemVisible = a.getInt(R.styleable.BaseItemView_itemVisible, GONE);
-        itemChildVisible = a.getInt(R.styleable.BaseItemView_itemChildVisible, VISIBLE);
-        itemFloat = a.getFloat(R.styleable.BaseItemView_itemFloat, 0);
-        itemIcon = a.getResourceId(R.styleable.BaseItemView_itemIcon, 0);
-        itemColor = a.getResourceId(R.styleable.BaseItemView_itemColor, 0);
-        itemChildColor = a.getResourceId(R.styleable.BaseItemView_itemChildColor, 0);
-        itemBg = a.getResourceId(R.styleable.BaseItemView_itemBg, 0);
-        itemRes = a.getResourceId(R.styleable.BaseItemView_itemRes, 0);
-        itemName = a.getString(R.styleable.BaseItemView_itemName);
-        itemHint = a.getString(R.styleable.BaseItemView_itemHint);
-        itemTitle = a.getString(R.styleable.BaseItemView_itemTitle);
-        itemContent = a.getString(R.styleable.BaseItemView_itemContent);
-        itemDetail = a.getString(R.styleable.BaseItemView_itemDetail);
-        itemDescription = a.getString(R.styleable.BaseItemView_itemDescription);
-        itemInputType = a.getInt(R.styleable.BaseItemView_android_inputType, 0);
-        itemMinLines = a.getInt(R.styleable.BaseItemView_android_maxLines, 0);
-        itemMaxLines = a.getInt(R.styleable.BaseItemView_android_maxLines, 0);
-        itemMin = a.getInt(R.styleable.BaseItemView_itemMin, -1);
-        itemMax = a.getInt(R.styleable.BaseItemView_itemMax, -1);
+        itemNum = a.getInt(R.styleable.BaseItem_gNum, 0);
+        itemCount = a.getInt(R.styleable.BaseItem_gCount, 0);
+        itemIndex = a.getInt(R.styleable.BaseItem_gIndex, 0);
+        itemBool = a.getBoolean(R.styleable.BaseItem_gBool, false);
+        itemCheck = a.getBoolean(R.styleable.BaseItem_gCheck, false);
+        itemVisible = a.getInt(R.styleable.BaseItem_gItemVisible, GONE);
+        itemChildVisible = a.getInt(R.styleable.BaseItem_gItemChildVisible, VISIBLE);
+        itemFloat = a.getFloat(R.styleable.BaseItem_gFloat, 0);
+        itemIcon = a.getResourceId(R.styleable.BaseItem_gIcon, 0);
+        itemColor = a.getResourceId(R.styleable.BaseItem_gColor, 0);
+        itemChildColor = a.getResourceId(R.styleable.BaseItem_gChildColor, 0);
+        itemBg = a.getResourceId(R.styleable.BaseItem_gBg, 0);
+        itemRes = a.getResourceId(R.styleable.BaseItem_gRes, 0);
+        itemName = a.getString(R.styleable.BaseItem_gName);
+        itemHint = a.getString(R.styleable.BaseItem_gHint);
+        itemTitle = a.getString(R.styleable.BaseItem_gTitle);
+        itemContent = a.getString(R.styleable.BaseItem_gContent);
+        itemDetail = a.getString(R.styleable.BaseItem_gDetail);
+        itemDescription = a.getString(R.styleable.BaseItem_gDescription);
+        itemInputType = a.getInt(R.styleable.BaseItem_android_inputType, 0);
+        itemMinLines = a.getInt(R.styleable.BaseItem_android_maxLines, 0);
+        itemMaxLines = a.getInt(R.styleable.BaseItem_android_maxLines, 0);
+        itemMin = a.getInt(R.styleable.BaseItem_gMin, -1);
+        itemMax = a.getInt(R.styleable.BaseItem_gMax, -1);
         itemName = itemName == null ? "" : itemName;
         itemHint = itemHint == null ? "" : itemHint;
         itemTitle = itemTitle == null ? "" : itemTitle;
         itemContent = itemContent == null ? "" : itemContent;
         itemDetail = itemDetail == null ? "" : itemDetail;
         itemDescription = itemDescription == null ? "" : itemDescription;
-        itemType = a.getInt(R.styleable.BaseItemView_itemType, -1);
-        if (setExtendEnumStyle() != R.styleable.BaseItemView && setItemTypeEnumStyle() != R.styleable.BaseItemView_itemType) {
+        itemType = a.getInt(R.styleable.BaseItem_gType, -1);
+        if (setExtendEnumStyle() != R.styleable.BaseItem && setItemTypeEnumStyle() != R.styleable.BaseItem_gType) {
             a.recycle();
             a = context.obtainStyledAttributes(attrs, setExtendEnumStyle());
             int type = a.getInt(setItemTypeEnumStyle(), -1);
@@ -189,17 +189,17 @@ public abstract class BaseItemView extends RelativeLayout {
         }
     }
 
-    public BaseItemView setFormat(int viewId, int formatRes, Object... objects) {
+    public BaseItem setFormat(int viewId, int formatRes, Object... objects) {
         setTextForView(viewId, String.format(getContext().getString(formatRes), objects));
         return this;
     }
 
-    public BaseItemView setText(int viewId, @StringRes int textRes) {
+    public BaseItem setText(int viewId, @StringRes int textRes) {
         setText(viewId, getContext().getString(textRes));
         return this;
     }
 
-    public BaseItemView setText(int viewId, Object text) {
+    public BaseItem setText(int viewId, Object text) {
         String string;
         if (text == null) {
             string = "";
@@ -213,7 +213,7 @@ public abstract class BaseItemView extends RelativeLayout {
     }
 
 
-    private BaseItemView setTextForView(int viewId, String text) {
+    private BaseItem setTextForView(int viewId, String text) {
         View view = getView(viewId);
         if (view != null) {
             if (view instanceof TextView) {
@@ -223,7 +223,7 @@ public abstract class BaseItemView extends RelativeLayout {
         return this;
     }
 
-    public BaseItemView setTextColor(int viewId, @ColorRes int textColorRes) {
+    public BaseItem setTextColor(int viewId, @ColorRes int textColorRes) {
         View view = getView(viewId);
         if (view != null) {
             if (view instanceof TextView) {
@@ -233,7 +233,7 @@ public abstract class BaseItemView extends RelativeLayout {
         return this;
     }
 
-    public BaseItemView setImageUrl(int viewId, String url) {
+    public BaseItem setImageUrl(int viewId, String url) {
         View view = getView(viewId);
         if (view != null) {
             if (view instanceof SimpleDraweeView) {
@@ -245,7 +245,7 @@ public abstract class BaseItemView extends RelativeLayout {
         return this;
     }
 
-    public BaseItemView setImageURI(int viewId, Uri uri) {
+    public BaseItem setImageURI(int viewId, Uri uri) {
         View view = getView(viewId);
         if (view != null) {
             if (view instanceof SimpleDraweeView) {
@@ -257,7 +257,7 @@ public abstract class BaseItemView extends RelativeLayout {
         return this;
     }
 
-    public BaseItemView setImageBitmap(int viewId, Bitmap bitmap) {
+    public BaseItem setImageBitmap(int viewId, Bitmap bitmap) {
         View view = getView(viewId);
         if (view != null) {
             if (view instanceof ImageView) {
@@ -267,7 +267,7 @@ public abstract class BaseItemView extends RelativeLayout {
         return this;
     }
 
-    public BaseItemView setImageRes(int viewId, @DrawableRes int drawableRes) {
+    public BaseItem setImageRes(int viewId, @DrawableRes int drawableRes) {
         View view = getView(viewId);
         if (view != null) {
             if (view instanceof ImageView) {
@@ -277,7 +277,7 @@ public abstract class BaseItemView extends RelativeLayout {
         return this;
     }
 
-    public BaseItemView setRippleComplete(int viewId, RippleView.OnRippleCompleteListener completeListener) {
+    public BaseItem setRippleComplete(int viewId, RippleView.OnRippleCompleteListener completeListener) {
         View view = getView(viewId);
         if (view != null) {
             if (view instanceof RippleView) {
@@ -287,7 +287,7 @@ public abstract class BaseItemView extends RelativeLayout {
         return this;
     }
 
-    public BaseItemView setClick(int viewId, OnClickListener listener) {
+    public BaseItem setClick(int viewId, OnClickListener listener) {
         View view = getView(viewId);
         if (view != null) {
             view.setOnClickListener(listener);
@@ -295,7 +295,7 @@ public abstract class BaseItemView extends RelativeLayout {
         return this;
     }
 
-    public BaseItemView setLongClick(int viewId, OnLongClickListener listener) {
+    public BaseItem setLongClick(int viewId, OnLongClickListener listener) {
         View view = getView(viewId);
         if (view != null) {
             view.setOnLongClickListener(listener);
@@ -303,7 +303,7 @@ public abstract class BaseItemView extends RelativeLayout {
         return this;
     }
 
-    public BaseItemView setEnable(int viewId, boolean enable) {
+    public BaseItem setEnable(int viewId, boolean enable) {
         View view = getView(viewId);
         if (view != null) {
             view.setEnabled(enable);
@@ -311,7 +311,7 @@ public abstract class BaseItemView extends RelativeLayout {
         return this;
     }
 
-    public BaseItemView setVisibility(int viewId, int visibility) {
+    public BaseItem setVisibility(int viewId, int visibility) {
         View view = getView(viewId);
         if (view != null) {
             view.setVisibility(visibility);
@@ -403,13 +403,13 @@ public abstract class BaseItemView extends RelativeLayout {
     protected
     @StyleableRes
     int setItemTypeEnumStyle() {
-        return R.styleable.BaseItemView_itemType;
+        return R.styleable.BaseItem_gType;
     }
 
     protected
     @StyleableRes
     int[] setExtendEnumStyle() {
-        return R.styleable.BaseItemView;
+        return R.styleable.BaseItem;
     }
 
     public interface OnViewSenseListener {

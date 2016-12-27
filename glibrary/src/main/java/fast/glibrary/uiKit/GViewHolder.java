@@ -5,6 +5,7 @@ import android.support.annotation.StringRes;
 import android.support.v7.widget.RecyclerView;
 import android.util.SparseArray;
 import android.view.View;
+import android.widget.TextView;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -159,5 +160,18 @@ public class GViewHolder extends RecyclerView.ViewHolder {
     public GViewHolder setText(@IdRes int id, Object data, boolean format) {
         getViewHolder(id).setText(data, format);
         return this;
+    }
+
+    /**
+     * getText from TextView or EditText
+     *
+     * @param id
+     * @return
+     */
+    public String getText(@IdRes int id) {
+        if (getView(id) instanceof TextView) {
+            return ((TextView) getView(id)).getText().toString();
+        }
+        return null;
     }
 }

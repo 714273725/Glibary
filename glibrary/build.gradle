@@ -2,8 +2,8 @@ apply plugin: 'com.android.library'
 apply plugin: 'com.jfrog.bintray'
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'me.tatarka.retrolambda'
-def versionc = 19;
-def versions = "0.0.19"
+def versionc = 26;
+def versions = "0.0.26"
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.1"

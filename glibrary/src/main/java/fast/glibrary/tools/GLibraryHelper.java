@@ -37,6 +37,7 @@ public class GLibraryHelper {
         }
         L.setTag(context.getPackageName());
         mContext = context;
+        TS.init(context);
         Fresco.initialize(context);
     }
 }
