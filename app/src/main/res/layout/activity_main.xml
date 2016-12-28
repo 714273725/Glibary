@@ -13,7 +13,15 @@
 
         <android.support.v4.view.ViewPager
             android:id="@+id/vpContent"
+            android:layout_above="@+id/kiAdd"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
+
+        <com.administrator.gdemo.KItem
+            android:id="@+id/kiAdd"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            app:function="addToShoppingCard"
+            android:layout_height="wrap_content"/>
     </RelativeLayout>
 </LinearLayout>

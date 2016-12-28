@@ -27,7 +27,7 @@ import fast.glibrary.base.popwindow.BasePopWindow;
 public class GPopupWindow extends BasePopWindow {
     PopupWindow.OnDismissListener dismissListener;
     RelativeLayout container;
-    boolean hasShadow = false;
+    boolean hasShadow = true;
 
     public GPopupWindow(Context context, @LayoutRes int layout) {
         super(context, layout);

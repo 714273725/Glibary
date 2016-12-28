@@ -48,6 +48,7 @@ public class MainActivity extends BaseActivity {
         adapter.setBinder((container, holder, s, position) -> {
             holder.getViewHolder(R.id.siv).
                     setImageUri((new Uri.Builder()).scheme("res").path(s).build());
+
         });
         adapter.setData(Arrays.asList(strings));
     }

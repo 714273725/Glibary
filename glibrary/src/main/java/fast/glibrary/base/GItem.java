@@ -50,13 +50,9 @@ public abstract class GItem extends LinearLayout {
     }
 
     private void init(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.GItem);
-        if (setExtendEnumStyle() != R.styleable.GItem && setItemTypeEnumStyle() != R.styleable.GItem_type) {
-            a.recycle();
-            a = context.obtainStyledAttributes(attrs, setExtendEnumStyle());
-            int type = a.getInt(setItemTypeEnumStyle(), -1);
-            if (type != -1) itemType = type;
-        }
+        TypedArray a = context.obtainStyledAttributes(attrs, setExtendEnumStyle());
+        int type = a.getInt(setItemTypeEnumStyle(), -1);
+        if (type != -1) itemType = type;
         if (itemType == -1) itemType = 0;
         a.recycle();
     }
@@ -76,13 +72,9 @@ public abstract class GItem extends LinearLayout {
 
     protected
     @StyleableRes
-    int setItemTypeEnumStyle() {
-        return R.styleable.GItem_type;
-    }
+    abstract int setItemTypeEnumStyle();
 
     protected
     @StyleableRes
-    int[] setExtendEnumStyle() {
-        return R.styleable.GItem;
-    }
+    abstract int[] setExtendEnumStyle();
 }
