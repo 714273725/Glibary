@@ -6,6 +6,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.ViewGroup;
 
@@ -17,6 +18,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import fast.game.library.view.GSurfaceView;
+import fast.game.library.view.HSurfaceView;
 import fast.glibrary.annotation.SaveState;
 import fast.glibrary.base.BaseActivity;
 import fast.glibrary.base.adapter.BasePagerAdapter;
@@ -41,8 +44,12 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        DisplayMetrics outMetrics = new DisplayMetrics();
+        this.getWindowManager().getDefaultDisplay().getMetrics(outMetrics);
+        GSurfaceView.SCREEN_WIDTH = outMetrics.widthPixels;
+        GSurfaceView.SCREEN_HEIGHT = outMetrics.heightPixels;
         setContentView(R.layout.activity_main);
-        ViewPager pager = (ViewPager) findViewById(R.id.vpContent);
+        /*ViewPager pager = (ViewPager) findViewById(R.id.vpContent);
         GPagerAdapter<String> adapter = new GPagerAdapter<>(R.layout.pager_adapter);
         pager.setAdapter(adapter);
         adapter.setBinder((container, holder, s, position) -> {
@@ -50,6 +57,6 @@ public class MainActivity extends BaseActivity {
                     setImageUri((new Uri.Builder()).scheme("res").path(s).build());
 
         });
-        adapter.setData(Arrays.asList(strings));
+        adapter.setData(Arrays.asList(strings));*/
     }
 }
