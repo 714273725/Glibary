@@ -41,10 +41,11 @@ public class GSurfaceView extends SurfaceView implements SurfaceHolder.Callback 
     private Sprite mSprite;
     private int spriteWidth = 0;
     private int spriteHeight = 0;
-    private float spriteSpeed = (float) ((500 * SCREEN_WIDTH / 480) * 0.005);
+    private float spriteSpeed = (float) ((500 * SCREEN_WIDTH / 480) * 0.01);
     private int row = 4;
     private int col = 4;
-        private Bitmap bg;
+    private Bitmap bg;
+
     public GSurfaceView(Context context) {
         super(context);
         this.mContext = context;
@@ -56,7 +57,7 @@ public class GSurfaceView extends SurfaceView implements SurfaceHolder.Callback 
     }
 
     private void initResources() {
-        bg = decodeBitmapFromRes(mContext,R.drawable.pic);
+        bg = decodeBitmapFromRes(mContext, R.drawable.pic);
 
         //将图片分成4行4列
         Bitmap[][] spriteImgs = generateBitmapArray(mContext, R.drawable.sprite, row, col);
@@ -168,11 +169,15 @@ public class GSurfaceView extends SurfaceView implements SurfaceHolder.Callback 
                 } catch (Exception e) {
                     e.printStackTrace();
                 } finally {
-                    if (null != mHolder) {
-                        mHolder.unlockCanvasAndPost(canvas);
-                    }
-                }
+                    try {
+                        if (null != mHolder) {
+                            mHolder.unlockCanvasAndPost(canvas);
+                        }
+                    } catch (Exception e) {
 
+                    }
+
+                }
                 deltaTime = System.currentTimeMillis() - tickTime;
                 if (deltaTime < DRAW_INTERVAL) {
                     try {
@@ -189,7 +194,7 @@ public class GSurfaceView extends SurfaceView implements SurfaceHolder.Callback 
 
     private void drawSprite(Canvas canvas) {
         //清屏操作
-        canvas.drawBitmap(bg,0,0,null);
+        canvas.drawBitmap(bg, 0, 0, null);
         mSprite.draw(canvas);
     }
 }

@@ -5,28 +5,12 @@
               android:id="@+id/activity_main"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:orientation="vertical"
               android:background="@android:color/holo_green_light"
+              android:orientation="vertical"
               tools:context="com.administrator.gdemo.MainActivity">
-    <fast.game.library.view.HSurfaceView
-        android:layout_width="50dp"
-        android:layout_height="140dp"/>
-    <RelativeLayout
-        android:visibility="gone"
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rvList"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <android.support.v4.view.ViewPager
-            android:id="@+id/vpContent"
-            android:layout_above="@+id/kiAdd"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-
-        <com.administrator.gdemo.KItem
-            android:id="@+id/kiAdd"
-            android:layout_alignParentBottom="true"
-            android:layout_width="match_parent"
-            app:function="addToShoppingCard"
-            android:layout_height="wrap_content"/>
-    </RelativeLayout>
+        android:layout_height="match_parent"/>
 </LinearLayout>

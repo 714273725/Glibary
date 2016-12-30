@@ -1,5 +1,7 @@
 package fast.glibrary.base;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -16,5 +18,24 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
+
+    public void start(Class<? extends Activity> activityClass) {
+        Intent intent = new Intent();
+        intent.setClass(this, activityClass);
+        this.startActivity(intent);
+    }
+    public void start(Class<? extends Activity> activityClass, BaseIntent baseIntent) {
+        Intent intent = new Intent();
+        intent.setClass(this, activityClass);
+        baseIntent.setIntent(intent);
+        this.startActivity(intent);
+    }
+
+    public BaseActivity getThis(){
+        return BaseActivity.this;
+    }
+    public interface BaseIntent {
+        void setIntent(Intent intent);
     }
 }

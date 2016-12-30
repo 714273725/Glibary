@@ -20,24 +20,22 @@ import fast.glibrary.uiKit.GViewHolder;
  * 修改备注：
  */
 public abstract class BasePagerAdapter<T> extends PagerAdapter {
-    int defaultLayoutId;
 
 
     List<T> data;
     SparseArray<GViewHolder> holders;
-
-    public BasePagerAdapter(int defaultLayoutId) {
-        this.defaultLayoutId = defaultLayoutId;
-        holders = new SparseArray<>();
-    }
 
     public void setData(List<T> data) {
         this.data = data;
         notifyDataSetChanged();
     }
 
-    public BasePagerAdapter(int defaultLayoutId, List<T> data) {
-        this(defaultLayoutId);
+    public BasePagerAdapter() {
+        holders = new SparseArray<>();
+    }
+
+    public BasePagerAdapter(List<T> data) {
+        holders = new SparseArray<>();
         this.data = data;
     }
 
@@ -59,6 +57,7 @@ public abstract class BasePagerAdapter<T> extends PagerAdapter {
     public abstract void bindData(ViewGroup container, GViewHolder holder, T t, int position);
 
     public abstract int pagerLayout(int pos);
+
 
 
     @Override

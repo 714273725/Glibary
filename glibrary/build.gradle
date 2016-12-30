@@ -77,6 +77,9 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:25.0.1'
     compile 'com.yanzhenjie.nohttp:okhttp:1.1.0'
     compile 'com.android.support:percent:22.2.0'
+    compile 'com.android.support:design:25.1.0'
+    compile 'com.jakewharton:butterknife:8.4.0'
+    compile 'com.jakewharton:butterknife-compiler:8.4.0'
 }
 apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
 apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'

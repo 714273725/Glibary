@@ -20,14 +20,16 @@ import fast.glibrary.uiKit.GViewHolder;
  */
 public class GPagerAdapter<T> extends BasePagerAdapter<T> {
     GPagerBinder<T> binder;
+    int defaultLayoutId;
     public void setBinder(GPagerBinder<T> binder) {
         this.binder = binder;
     }
     public GPagerAdapter(int defaultLayoutId) {
-        super(defaultLayoutId);
+        this.defaultLayoutId = defaultLayoutId;
     }
     public GPagerAdapter(int defaultLayoutId, List<T> data) {
-        super(defaultLayoutId, data);
+        super(data);
+        this.defaultLayoutId = defaultLayoutId;
     }
 
     @Override
