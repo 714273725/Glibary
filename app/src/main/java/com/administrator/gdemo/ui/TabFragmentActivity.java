@@ -44,12 +44,12 @@ public class TabFragmentActivity extends BaseFragmentTabActivity {
     }
 
     @Override
-    public Fragment getFragment(int pos) {
+    public Fragment getFragmentEntity(int pos) {
         return new GFragment();
     }
 
     @Override
-    public int getCount() {
+    public int getFragmentCount() {
         return list_title.size();
     }
 

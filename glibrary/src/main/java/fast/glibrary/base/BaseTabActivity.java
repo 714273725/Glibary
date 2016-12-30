@@ -35,7 +35,7 @@ import fast.glibrary.uiKit.TabIcon;
  */
 public abstract class BaseTabActivity<T> extends BaseActivity {
 
-
+    ViewPager.OnPageChangeListener mPageChangeListener;
     TabLayout tab;
     Toolbar toolbar;
     ViewPager pager;
@@ -82,7 +82,9 @@ public abstract class BaseTabActivity<T> extends BaseActivity {
         pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
+                if (mPageChangeListener != null) {
+                    mPageChangeListener.onPageScrolled(position, positionOffset, positionOffsetPixels);
+                }
             }
 
             @Override
@@ -90,11 +92,16 @@ public abstract class BaseTabActivity<T> extends BaseActivity {
                 if (tab.getSelectedTabPosition() != position) {
                     tab.getTabAt(position).select();
                 }
+                if (mPageChangeListener != null) {
+                    mPageChangeListener.onPageSelected(position);
+                }
             }
 
             @Override
             public void onPageScrollStateChanged(int state) {
-
+                if (mPageChangeListener != null) {
+                    mPageChangeListener.onPageScrollStateChanged(state);
+                }
             }
         });
         tab.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -158,7 +165,9 @@ public abstract class BaseTabActivity<T> extends BaseActivity {
             }
         }
     }
-
+    public void addPageChangeListener(ViewPager.OnPageChangeListener pageChangeListener) {
+        this.mPageChangeListener = pageChangeListener;
+    }
     public void setTabBackground(int colorRes) {
         tab.setBackgroundResource(colorRes);
     }

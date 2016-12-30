@@ -11,14 +11,10 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
-
-import java.util.List;
 
 import fast.glibrary.R;
 import fast.glibrary.base.adapter.BaseFragmentPagerAdapter;
-import fast.glibrary.base.adapter.BasePagerAdapter;
 import fast.glibrary.uiKit.GViewHolder;
 import fast.glibrary.uiKit.TabIcon;
 
@@ -34,6 +30,7 @@ import fast.glibrary.uiKit.TabIcon;
 public abstract class BaseFragmentTabActivity extends BaseActivity {
 
 
+    ViewPager.OnPageChangeListener mPageChangeListener;
     TabLayout tab;
     Toolbar toolbar;
     ViewPager pager;
@@ -57,25 +54,27 @@ public abstract class BaseFragmentTabActivity extends BaseActivity {
     private void setUpView() {
         tab = (TabLayout) findViewById(R.id.tab);
         pager = (ViewPager) findViewById(R.id.pager);
-        for (int i = 0; i < getCount(); i++) {
+        for (int i = 0; i < getFragmentCount(); i++) {
             setTabView(tab, addTab(i));
         }
         adapter = new BaseFragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getFragment(int position) {
-                return getFragment(position);
+                return getFragmentEntity(position);
             }
 
             @Override
             public int getCount() {
-                return getCount();
+                return getFragmentCount();
             }
         };
         pager.setAdapter(adapter);
         pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
+                if (mPageChangeListener != null) {
+                    mPageChangeListener.onPageScrolled(position, positionOffset, positionOffsetPixels);
+                }
             }
 
             @Override
@@ -83,11 +82,16 @@ public abstract class BaseFragmentTabActivity extends BaseActivity {
                 if (tab.getSelectedTabPosition() != position) {
                     tab.getTabAt(position).select();
                 }
+                if (mPageChangeListener != null) {
+                    mPageChangeListener.onPageSelected(position);
+                }
             }
 
             @Override
             public void onPageScrollStateChanged(int state) {
-
+                if (mPageChangeListener != null) {
+                    mPageChangeListener.onPageScrollStateChanged(state);
+                }
             }
         });
         tab.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -114,7 +118,7 @@ public abstract class BaseFragmentTabActivity extends BaseActivity {
             }
         });
         setTabBackground(R.color.white);
-        pager.setOffscreenPageLimit(getCount());
+        pager.setOffscreenPageLimit(getFragmentCount());
     }
 
     public void setTabView(TabLayout tab, TabIcon icon) {
@@ -151,13 +155,17 @@ public abstract class BaseFragmentTabActivity extends BaseActivity {
         }
     }
 
+    public void addPageChangeListener(ViewPager.OnPageChangeListener pageChangeListener) {
+        this.mPageChangeListener = pageChangeListener;
+    }
+
     public void setTabBackground(int colorRes) {
         tab.setBackgroundResource(colorRes);
     }
 
-    public abstract Fragment getFragment(int pos);
+    public abstract Fragment getFragmentEntity(int pos);
 
-    public abstract int getCount();
+    public abstract int getFragmentCount();
 
     public abstract TabIcon addTab(int pos);
 }

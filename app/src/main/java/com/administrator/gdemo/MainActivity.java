@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.administrator.gdemo.ui.TabActivity;
+import com.administrator.gdemo.ui.TabFragmentActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,6 +52,8 @@ public class MainActivity extends BaseActivity {
     {
         itemList.add("TopTab");
         itemList.add("BottomTab");
+        itemList.add("TabTopFragment");
+        itemList.add("TabBottomFragment");
     }
 
     @Override
@@ -77,6 +80,12 @@ public class MainActivity extends BaseActivity {
                 break;
             case 1:
                 start(TabActivity.class, intent -> intent.putExtra(Mode.Mode,Mode.Tab_below));
+                break;
+            case 2:
+                start(TabFragmentActivity.class);
+                break;
+            case 3:
+                start(TabFragmentActivity.class, intent -> intent.putExtra(Mode.Mode,Mode.Tab_below));
                 break;
         }
     }
