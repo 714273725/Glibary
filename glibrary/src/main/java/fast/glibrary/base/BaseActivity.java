@@ -5,6 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.widget.TextView;
+
 /**
  * 项目名称：GDemo
  * 类描述：
@@ -37,5 +40,16 @@ public class BaseActivity extends AppCompatActivity {
     }
     public interface BaseIntent {
         void setIntent(Intent intent);
+    }
+
+    public static void initToolbar(BaseActivity activity, Toolbar toolbar, TextView title) {
+        //用toolbar代替actionBar
+        activity.setSupportActionBar(toolbar);
+        //设置居中的title文字
+        title.setText(activity.getTitle().toString());
+        //label 不显示
+        activity.getSupportActionBar().setDisplayShowTitleEnabled(false);
+        //点击左侧箭头返回
+        activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 }

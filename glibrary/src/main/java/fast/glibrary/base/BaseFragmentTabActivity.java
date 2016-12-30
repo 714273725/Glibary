@@ -1,5 +1,6 @@
 package fast.glibrary.base;
 
+import android.content.res.ColorStateList;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import fast.glibrary.R;
 import fast.glibrary.base.adapter.BaseFragmentPagerAdapter;
@@ -101,7 +103,9 @@ public abstract class BaseFragmentTabActivity extends BaseActivity {
                     GViewHolder h = new GViewHolder(tab.getCustomView());
                     h.getView(R.id.tabIcon).setSelected(true);
                 }
-                pager.setCurrentItem(tab.getPosition());
+                if(tab.getPosition()!=pager.getCurrentItem()){
+                    pager.setCurrentItem(tab.getPosition());
+                }
             }
 
             @Override
@@ -125,36 +129,72 @@ public abstract class BaseFragmentTabActivity extends BaseActivity {
         if (icon.getTabSelectedIcon() == 0) {
             tab.addTab(tab.newTab().setText(icon.getTabTitle()));
         } else {
-            Drawable select = null;
-            Drawable unSelect = null;
-            try {
-                select = getResources().getDrawable(icon.getTabSelectedIcon());
-                unSelect = getResources().getDrawable(icon.getTabUnselectedIcon());
-            } catch (Exception e) {
-
-            }
-            if (select == null || unSelect == null) {
-                tab.addTab(tab.newTab().setText(icon.getTabTitle()));
-            } else {
-                StateListDrawable drawble = new StateListDrawable();
-                int stateSelected = android.R.attr.state_selected;
-                drawble.addState(new int[]{stateSelected}, select);
-                drawble.addState(new int[]{}, unSelect);
-                View v = LayoutInflater.from(this).inflate(R.layout.tab, null);
-                GViewHolder holder = new GViewHolder(v);
-                ImageView iv = holder.getView(R.id.tabIcon);
-                iv.setImageDrawable(drawble);
-                holder.setText(R.id.tabString, icon.getTabTitle());
-                if (TextUtils.isEmpty(icon.getTabTitle())) {
-                    holder.setVisibility(R.id.tabString, View.GONE);
-                } else {
-                    holder.setVisibility(R.id.tabString, View.VISIBLE);
-                }
-                tab.addTab(tab.newTab().setCustomView(v));
-            }
+            setUpCoustomTab(tab, icon);
         }
     }
 
+    private void setUpCoustomTab(TabLayout tab, TabIcon icon) {
+        Drawable select = null;
+        Drawable unSelect = null;
+        try {
+            select = getResources().getDrawable(icon.getTabSelectedIcon());
+            unSelect = getResources().getDrawable(icon.getTabUnselectedIcon());
+        } catch (Exception e) {
+
+        }
+        if (select == null || unSelect == null) {
+            tab.addTab(tab.newTab().setText(icon.getTabTitle()));
+        } else {
+            StateListDrawable drawble = new StateListDrawable();
+            int stateSelected = android.R.attr.state_selected;
+            drawble.addState(new int[]{stateSelected}, select);
+            drawble.addState(new int[]{}, unSelect);
+            View v = LayoutInflater.from(this).inflate(R.layout.tab, null);
+            GViewHolder holder = new GViewHolder(v);
+            ImageView iv = holder.getView(R.id.tabIcon);
+            iv.setImageDrawable(drawble);
+            holder.setText(R.id.tabString, icon.getTabTitle());
+            if (TextUtils.isEmpty(icon.getTabTitle())) {
+                holder.setVisibility(R.id.tabString, View.GONE);
+            } else {
+                holder.setVisibility(R.id.tabString, View.VISIBLE);
+            }
+            TextView textView = holder.getView(R.id.tabString);
+            setUpCustomTabText(textView);
+            tab.addTab(tab.newTab().setCustomView(v));
+        }
+    }
+
+
+    private void setUpCustomTabText(TextView textView) {
+        int[] colors = setIndicatorColor();
+        if (colors != null) {
+            int select = 0;
+            int unSelect = 0;
+            try {
+                select = getResources().getColor(colors[0]);
+                unSelect = getResources().getColor(colors[1]);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            if (select != 0 && unSelect != 0) {
+                ColorStateList drawble = new ColorStateList(
+                        new int[][]{{android.R.attr.state_selected}, {0}},
+                        new int[]{unSelect, select});
+                textView.setTextColor(drawble);
+            }
+        }
+    }
+    /**
+     * [0] 未选中的字体颜色res
+     * [1] 选中的字体颜色的res
+     *
+     * @return
+     */
+    public int[] setIndicatorColor() {
+        return null;
+    }
     public void addPageChangeListener(ViewPager.OnPageChangeListener pageChangeListener) {
         this.mPageChangeListener = pageChangeListener;
     }

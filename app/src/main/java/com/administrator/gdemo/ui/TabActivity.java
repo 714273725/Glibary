@@ -69,4 +69,9 @@ public class TabActivity extends BaseTabActivity<String> {
         return new TabIcon(mIconSelectIds[pos]
                 , list_title.get(pos), mIconUnselectIds[pos]);
     }
+
+    @Override
+    public int[] setIndicatorColor() {
+        return new int[]{R.color.bgDivider,R.color.colorAccent};
+    }
 }

@@ -2,8 +2,8 @@ apply plugin: 'com.android.library'
 apply plugin: 'com.jfrog.bintray'
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'me.tatarka.retrolambda'
-def versionc = 28;
-def versions = "0.0.28"
+def versionc = 33;
+def versions = "0.0.33"
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.1"
@@ -78,8 +78,7 @@ dependencies {
     compile 'com.yanzhenjie.nohttp:okhttp:1.1.0'
     compile 'com.android.support:percent:22.2.0'
     compile 'com.android.support:design:25.1.0'
-    compile 'com.jakewharton:butterknife:8.4.0'
-    compile 'com.jakewharton:butterknife-compiler:8.4.0'
+
 }
 apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
 apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'
