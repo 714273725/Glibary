@@ -27,9 +27,9 @@ import fast.glibrary.uiKit.TabIcon;
 
 /**
  * 项目名称：GDemo
- * 类描述：快速实现一个tab+viewPager内容的页面
+ * <p>类描述：快速实现一个tab+viewPager内容的页面
  * viewPager的内容是一个比较简单的layout
- * <p>
+ * </p>
  * 创建人：gejianye
  * 创建时间：2016/12/30 11:00
  * 修改人：Administrator
@@ -45,9 +45,9 @@ public abstract class BaseTabActivity<T> extends BaseActivity {
     public BasePagerAdapter<T> adapter;
 
     /**
-     * {@link Mode#Mode intent中通过这个key指定tab的位置模式}
-     * {@link Mode#Tab_Top tab在viewpager上方}
-     * {@link Mode#Tab_below tab在viewpager下方}
+     * intent中通过 {@link Mode#Mode}这个key指定tab的位置模式
+     * {@link Mode#Tab_Top}tab在viewpager上方
+     * {@link Mode#Tab_below}tab在viewpager下方
      *
      * @param savedInstanceState
      */
@@ -68,9 +68,8 @@ public abstract class BaseTabActivity<T> extends BaseActivity {
     }
 
     /**
-     * 初始化tab 与 viewPager
-     * {@link BaseTabActivity#addTab(int)}
-     * addTab(int) 返回 tab的属性
+     * 初始化tab{@link BaseTabActivity#addTab(int)}addTab(int) 返回 tab的属性
+     * 与 viewPager
      */
     private void setUpView() {
         tab = (TabLayout) findViewById(R.id.tab);

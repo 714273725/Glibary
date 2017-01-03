@@ -34,4 +34,10 @@
     <declare-styleable name="GItem">
         <attr name="type" format="integer"/>
     </declare-styleable>
+
+    <declare-styleable name="RefreshView">
+        <attr name="rtype" format="enum">
+            <enum name="soup" value="0"/>
+        </attr>
+    </declare-styleable>
 </resources>

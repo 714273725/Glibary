@@ -1,10 +1,11 @@
 package com.administrator.gdemo;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.DisplayMetrics;
+import android.view.DragEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -17,14 +18,14 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import fast.game.library.view.GSurfaceView;
 import fast.glibrary.annotation.SaveState;
 import fast.glibrary.base.BaseActivity;
 import fast.glibrary.base.Mode;
 import fast.glibrary.base.adapter.GAdapter;
-import fast.glibrary.base.adapter.GBinder;
 import fast.glibrary.data.DataFatroty;
+import fast.glibrary.tools.L;
 import fast.glibrary.uiKit.GViewHolder;
+import fast.glibrary.views.refresh.GRefreshLayout;
 
 
 public class MainActivity extends BaseActivity {
@@ -34,7 +35,7 @@ public class MainActivity extends BaseActivity {
             String.valueOf(R.drawable.a3),
             String.valueOf(R.drawable.a4),
             String.valueOf(R.drawable.a5)};
-    GAdapter<String> adapter = new GAdapter<String>(R.layout.item){
+    GAdapter<String> adapter = new GAdapter<String>(R.layout.item) {
         @Override
         public GViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             GViewHolder holder = super.onCreateViewHolder(parent, viewType);
@@ -47,7 +48,10 @@ public class MainActivity extends BaseActivity {
     RecyclerView rvList;
     @BindView(R.id.activity_main)
     LinearLayout activityMain;
+
     List<String> itemList = new ArrayList<>();
+    @BindView(R.id.srl)
+    GRefreshLayout srl;
 
     {
         itemList.add("TopTab");
@@ -74,18 +78,18 @@ public class MainActivity extends BaseActivity {
 
 
     private void click(View v) {
-        switch ((int)v.getTag()){
+        switch ((int) v.getTag()) {
             case 0:
                 start(TabActivity.class);
                 break;
             case 1:
-                start(TabActivity.class, intent -> intent.putExtra(Mode.Mode,Mode.Tab_below));
+                start(TabActivity.class, intent -> intent.putExtra(Mode.Mode, Mode.Tab_below));
                 break;
             case 2:
                 start(TabFragmentActivity.class);
                 break;
             case 3:
-                start(TabFragmentActivity.class, intent -> intent.putExtra(Mode.Mode,Mode.Tab_below));
+                start(TabFragmentActivity.class, intent -> intent.putExtra(Mode.Mode, Mode.Tab_below));
                 break;
         }
     }
