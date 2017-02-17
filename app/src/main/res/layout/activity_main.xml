@@ -11,9 +11,12 @@
     <fast.glibrary.views.refresh.GRefreshLayout
         android:id="@+id/srl"
         android:layout_width="match_parent"
+        app:headHeight="80dp"
+        android:background="@color/colorAccent"
         android:layout_height="match_parent">
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rvList"
+            android:background="@color/bgDivider"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
     </fast.glibrary.views.refresh.GRefreshLayout>

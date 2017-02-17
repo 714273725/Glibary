@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.administrator.gdemo.ui.OverScrollActivity;
 import com.administrator.gdemo.ui.TabActivity;
 import com.administrator.gdemo.ui.TabFragmentActivity;
 
@@ -58,6 +59,7 @@ public class MainActivity extends BaseActivity {
         itemList.add("BottomTab");
         itemList.add("TabTopFragment");
         itemList.add("TabBottomFragment");
+        itemList.add("OverScroll");
     }
 
     @Override
@@ -90,6 +92,9 @@ public class MainActivity extends BaseActivity {
                 break;
             case 3:
                 start(TabFragmentActivity.class, intent -> intent.putExtra(Mode.Mode, Mode.Tab_below));
+                break;
+            case 4:
+                start(OverScrollActivity.class);
                 break;
         }
     }

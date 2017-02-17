@@ -2,8 +2,9 @@ apply plugin: 'com.android.library'
 apply plugin: 'com.jfrog.bintray'
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'me.tatarka.retrolambda'
-def versionc = 33;
-def versions = "0.0.33"
+apply from: 'maven-push.gradle'
+def versionc = 34;
+def versions = "0.0.34"
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.1"

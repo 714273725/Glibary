@@ -7,7 +7,7 @@ import android.util.TypedValue;
 /**
  * Created by Alexey on 28.01.2016.
  */
-public class Utils {
+public class DensityUtil {
 
 
     public static int convertDpToPixel(Context context, int dp) {
