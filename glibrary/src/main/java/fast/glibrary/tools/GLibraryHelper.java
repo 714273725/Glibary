@@ -50,7 +50,7 @@ public class GLibraryHelper {
      */
     public static void init(Context context, NetWorkDispatcher.DispatcherConfig config) {
         init(context);
-        NetWorkDispatcher.getInstance().init(config);
+        NetWorkDispatcher.getInstance().init(context,config);
     }
 
 }

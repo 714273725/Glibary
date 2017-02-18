@@ -2,7 +2,12 @@ package com.administrator.gdemo;
 
 import android.app.Application;
 
+import com.administrator.gdemo.bean.LoginBean;
+
+import org.json.JSONObject;
+
 import fast.glibrary.base.adapter.BaseAdapter;
+import fast.glibrary.network.NetAction;
 import fast.glibrary.network.NetWorkDispatcher;
 import fast.glibrary.network.Param;
 import fast.glibrary.tools.GLibraryHelper;
@@ -16,19 +21,46 @@ import fast.glibrary.tools.GLibraryHelper;
  * 修改时间：2016/12/21 13:51
  * 修改备注：
  */
-public class App extends Application{
+public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
         GLibraryHelper.init(this, new NetWorkDispatcher.DispatcherConfig() {
+
             @Override
-            public Param getDefaultHeader(int postId) {
+            public Param getDefaultHeader(NetAction action) {
                 return null;
             }
 
             @Override
-            public Param getDefaultParams(int postId) {
+            public Param getDefaultParams(NetAction action) {
                 return null;
+            }
+
+            @Override
+            public Class getClz(NetAction action) {
+                Class clz = null;
+                switch (action.mAction) {
+                    case 1:
+                        clz = LoginBean.class;
+                        break;
+                }
+                return clz;
+            }
+
+            @Override
+            public boolean needDefaultHeader(NetAction action) {
+                return false;
+            }
+
+            @Override
+            public boolean needDefaultParams(NetAction action) {
+                return false;
+            }
+
+            @Override
+            public void handleData(NetAction action, Object data) {
+
             }
         });
 
