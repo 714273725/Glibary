@@ -21,7 +21,6 @@ import fast.glibrary.uiKit.TabIcon;
 public abstract class BaseTabHostActivity<T> extends BaseActivity {
     public FragmentTabHost mHost;
     public FrameLayout mFrameLayout;
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,32 +28,53 @@ public abstract class BaseTabHostActivity<T> extends BaseActivity {
         mHost = (FragmentTabHost) findViewById(android.R.id.tabhost);
         mHost.setup(getThis(), getSupportFragmentManager(), android.R.id.tabcontent);
         for (int i = 0; i < getCount(); i++) {
-            TextView textView = new TextView(getThis());
-            textView.setGravity(Gravity.CENTER);
-            textView.setBackgroundResource(android.R.color.holo_red_light);
-            textView.setText(""+i);
             // 给每个Tab按钮设置图标、文字和内容
             TabHost.TabSpec tabSpec = mHost.newTabSpec(getTab(i).getTabTitle())
-                    .setIndicator(textView);
+                    .setIndicator(getTabView(i));
             // 将Tab按钮添加进Tab选项卡中
             mHost.addTab(tabSpec, getFragment(i), null);
-            /*// 设置Tab按钮的背景
-            mHost.getTabWidget().getChildAt(i)
-                    .setBackgroundResource(R.drawable.selector_tab_background);*/
         }
         mHost.getTabWidget().setDividerDrawable(getResources().getDrawable(android.R.color.white));
-        mHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
-            @Override
-            public void onTabChanged(String s) {
 
-            }
-        });
     }
 
+    /**
+     * 根据位置获取tab的属性
+     *
+     * @param pos
+     * @return
+     */
     public abstract TabIcon getTab(int pos);
 
+    /**
+     * 返回tab的数量
+     *
+     * @return
+     */
     public abstract int getCount();
 
+    /**
+     * 根据位置获取相应的Fragment类
+     *
+     * @param pos
+     * @return
+     */
     public abstract Class getFragment(int pos);
+
+    /**
+     * tab视图
+     *
+     * @param pos
+     * @return
+     */
+    public View getTabView(int pos) {
+        TextView textView = new TextView(getThis());
+        textView.setGravity(Gravity.CENTER);
+        textView.setBackgroundResource(android.R.color.holo_red_light);
+        textView.setText(getTabString(pos));
+        return textView;
+    }
+
+    protected abstract String getTabString(int pos);
 
 }

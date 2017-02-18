@@ -3,6 +3,8 @@ package com.administrator.gdemo;
 import android.app.Application;
 
 import fast.glibrary.base.adapter.BaseAdapter;
+import fast.glibrary.network.NetWorkDispatcher;
+import fast.glibrary.network.Param;
 import fast.glibrary.tools.GLibraryHelper;
 
 /**
@@ -18,7 +20,17 @@ public class App extends Application{
     @Override
     public void onCreate() {
         super.onCreate();
-        GLibraryHelper.init(this);
+        GLibraryHelper.init(this, new NetWorkDispatcher.DispatcherConfig() {
+            @Override
+            public Param getDefaultHeader(int postId) {
+                return null;
+            }
+
+            @Override
+            public Param getDefaultParams(int postId) {
+                return null;
+            }
+        });
 
     }
 }

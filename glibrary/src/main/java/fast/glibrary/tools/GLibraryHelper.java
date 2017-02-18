@@ -5,6 +5,8 @@ import android.content.Context;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 
+import fast.glibrary.network.NetWorkDispatcher;
+
 /**
  * 项目名称：GDemo
  * 类描述：
@@ -31,7 +33,7 @@ public class GLibraryHelper {
      *
      * @param context
      */
-    public static void init(Context context) {
+    private static void init(Context context) {
         if (!(context instanceof Application)) {
             throw new IllegalArgumentException("context must be application");
         }
@@ -40,4 +42,15 @@ public class GLibraryHelper {
         TS.init(context);
         Fresco.initialize(context);
     }
+
+    /**
+     * context必须是Application
+     *
+     * @param context
+     */
+    public static void init(Context context, NetWorkDispatcher.DispatcherConfig config) {
+        init(context);
+        NetWorkDispatcher.getInstance().init(config);
+    }
+
 }
