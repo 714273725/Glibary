@@ -25,6 +25,7 @@
         <activity android:name=".MainActivity"/>
         <activity android:name=".ui.TabActivity"/>
         <activity android:name=".ui.TabFragmentActivity"/>
+        <activity android:name=".ui.TabHostActivity"/>
         <activity-alias
             android:name=".ui.NormalActivity"
             android:enabled="false"

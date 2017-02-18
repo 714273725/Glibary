@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import com.administrator.gdemo.ui.OverScrollActivity;
 import com.administrator.gdemo.ui.TabActivity;
 import com.administrator.gdemo.ui.TabFragmentActivity;
+import com.administrator.gdemo.ui.TabHostActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,8 +56,8 @@ public class MainActivity extends BaseActivity {
     GRefreshLayout srl;
 
     {
-        itemList.add("TopTab");
-        itemList.add("BottomTab");
+        itemList.add("TopTabViewPager");
+        itemList.add("BottomTabViewPager");
         itemList.add("TabTopFragment");
         itemList.add("TabBottomFragment");
         itemList.add("OverScroll");
@@ -94,7 +95,7 @@ public class MainActivity extends BaseActivity {
                 start(TabFragmentActivity.class, intent -> intent.putExtra(Mode.Mode, Mode.Tab_below));
                 break;
             case 4:
-                start(OverScrollActivity.class);
+                start(TabHostActivity.class);
                 break;
         }
     }
