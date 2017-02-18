@@ -60,9 +60,9 @@ public class WelcomeActivity extends BaseActivity {
         GSurfaceView.SCREEN_HEIGHT = outMetrics.heightPixels;
         setContentView(new GSurfaceView(getThis()));
         new Handler().postDelayed(() -> {
-            start(MainActivity.class);
+            start(LoginActivity.class);
             finish();
-        }, 2000);
+        }, 1);
         //setContentView(R.layout.activity_main);
     }
 }
