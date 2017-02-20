@@ -152,7 +152,7 @@ public class GRefresher extends RelativeLayout {
             case MotionEvent.ACTION_MOVE:
                 float dx = ev.getX() - mDownX;
                 float dy = ev.getY() - mDownY;
-                //如果dy大于dx，说明在y轴上移动速度比在x轴上快，可认为用户上拉或下拉
+                //如果abs（dy）大于abs（dx），说明在y轴上移动速度比在x轴上快，可认为用户上拉或下拉
                 if (Math.abs(dx) <= Math.abs(dy)) {//滑动允许最大角度为45度
                     //如果mChildView不能向下拉了，说明子控件滑到到顶了,(并且同时可以上拉，为了与列表不足一屏幕时的情况区分)
                     if (!ScrollUtils.canChildScrollUp(mChildView) && ScrollUtils.canChildScrollDown(mChildView)) {
