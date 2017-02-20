@@ -12,6 +12,7 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/gamelibrary" />
             <option value="$PROJECT_DIR$/glibrary" />
+            <option value="$PROJECT_DIR$/mvplibrary" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
