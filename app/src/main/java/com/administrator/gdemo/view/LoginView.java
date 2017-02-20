@@ -29,10 +29,10 @@ import com.administrator.gdemo.config.ViewAction;
 import fast.glibrary.network.Param;
 import fast.glibrary.tools.MD5;
 import fast.glibrary.uiKit.GViewHolder;
-import fast.mvplibrary.base.ActionDispatcher;
-import fast.mvplibrary.base.BaseModelAction;
-import fast.mvplibrary.base.BaseUserAction;
-import fast.mvplibrary.view.GView;
+import fast.mvp.base.ActionDispatcher;
+import fast.mvp.base.BaseModelAction;
+import fast.mvp.base.BaseUserAction;
+import fast.mvp.view.GView;
 
 /**
  * Created by Administrator on 2017/2/18.
@@ -60,6 +60,11 @@ public class LoginView extends GView {
 
     @Override
     public void dispatchData(BaseModelAction action, Object data) {
+
+    }
+
+    @Override
+    public void upDateView(BaseModelAction action, Param params) {
 
     }
 

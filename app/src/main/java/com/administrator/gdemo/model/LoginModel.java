@@ -30,10 +30,10 @@ import fast.glibrary.base.BaseResponseLister;
 import fast.glibrary.network.NetAction;
 import fast.glibrary.network.NetWorkDispatcher;
 import fast.glibrary.network.Param;
-import fast.mvplibrary.base.BaseModelAction;
-import fast.mvplibrary.base.BaseUserAction;
-import fast.mvplibrary.base.WorkDoneDispatcher;
-import fast.mvplibrary.model.GModel;
+import fast.mvp.base.BaseModelAction;
+import fast.mvp.base.BaseUserAction;
+import fast.mvp.base.WorkDoneDispatcher;
+import fast.mvp.model.GModel;
 
 /**
  * Created by Administrator on 2017/2/18.

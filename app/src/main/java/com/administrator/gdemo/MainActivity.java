@@ -39,6 +39,7 @@ import fast.glibrary.tools.L;
 import fast.glibrary.tools.MD5;
 import fast.glibrary.uiKit.GViewHolder;
 import fast.glibrary.views.refresh.GRefreshLayout;
+import fast.glibrary.weight.GRefresher;
 
 
 public class MainActivity extends BaseActivity {
@@ -64,9 +65,19 @@ public class MainActivity extends BaseActivity {
 
     List<String> itemList = new ArrayList<>();
     @BindView(R.id.srl)
-    GRefreshLayout srl;
+    GRefresher srl;
 
     {
+        itemList.add("TopTabViewPager");
+        itemList.add("BottomTabViewPager");
+        itemList.add("TabTopFragment");
+        itemList.add("TabBottomFragment");
+        itemList.add("OverScroll");
+        itemList.add("TopTabViewPager");
+        itemList.add("BottomTabViewPager");
+        itemList.add("TabTopFragment");
+        itemList.add("TabBottomFragment");
+        itemList.add("OverScroll");
         itemList.add("TopTabViewPager");
         itemList.add("BottomTabViewPager");
         itemList.add("TabTopFragment");

@@ -86,6 +86,7 @@ public class NetWorkDispatcher {
     private void dispatchGet(String url, NetAction action, OnResponseListener listener) {
         doGet(url, action, listener);
     }
+
     /**
      * 文件上传，可同时提交参数及文件
      * {@link OnResponseListener}提供网络访问完成后的回调
@@ -186,10 +187,28 @@ public class NetWorkDispatcher {
 
         public abstract Class getClz(NetAction action);
 
+        /**
+         * 添加公共参数的入口
+         *
+         * @param action {@link NetAction}
+         * @return
+         */
         public abstract boolean needDefaultHeader(NetAction action);
 
+        /**
+         * 添加公共请求头的入口
+         *
+         * @param action {@link NetAction}
+         * @return
+         */
         public abstract boolean needDefaultParams(NetAction action);
 
+        /**
+         * 网络访问请求返回来的数据经过格式化处理后，将回调此方法做集中化处理
+         *
+         * @param action {@link NetAction}
+         * @param data
+         */
         public abstract void handleData(NetAction action, Object data);
     }
 

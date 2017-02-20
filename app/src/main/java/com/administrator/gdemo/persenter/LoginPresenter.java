@@ -31,11 +31,11 @@ import com.administrator.gdemo.model.LoginModel;
 import com.administrator.gdemo.view.LoginView;
 
 import fast.glibrary.base.BaseActivity;
-import fast.mvplibrary.base.ActionDispatcher;
-import fast.mvplibrary.base.BaseModelAction;
-import fast.mvplibrary.base.BaseUserAction;
-import fast.mvplibrary.base.WorkDoneDispatcher;
-import fast.mvplibrary.persenter.GPresenter;
+import fast.mvp.base.ActionDispatcher;
+import fast.mvp.base.BaseModelAction;
+import fast.mvp.base.BaseUserAction;
+import fast.mvp.base.WorkDoneDispatcher;
+import fast.mvp.persenter.GPresenter;
 
 /**
  * Created by Administrator on 2017/2/18.

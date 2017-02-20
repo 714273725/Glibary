@@ -1,4 +1,4 @@
-package com.lmcity.lmbuy.config;
+package fast.glibrary.network;
 
 /**
  * Created by GeJianYe on 2017/2/16 0016.
