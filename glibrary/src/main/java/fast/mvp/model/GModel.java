@@ -24,6 +24,7 @@ package fast.mvp.model;
 import fast.mvp.base.BaseModelAction;
 import fast.mvp.base.BaseUserAction;
 import fast.mvp.base.WorkDoneDispatcher;
+import fast.mvp.persenter.GPresenter;
 
 /**
  * Created by Administrator on 2017/2/18.
@@ -31,14 +32,12 @@ import fast.mvp.base.WorkDoneDispatcher;
  * Function:
  */
 
-public abstract class GModel {
-    public GModel(WorkDoneDispatcher workDoneDispatcher) {
-        this.mWorkDoneDispatcher = workDoneDispatcher;
+public abstract class GModel implements BaseModel {
+    public GModel(GPresenter dispatcher) {
+        this.mEventDispatcher = dispatcher;
     }
 
-    public WorkDoneDispatcher mWorkDoneDispatcher;
+    public GPresenter mEventDispatcher;
 
-    public abstract void workDone(BaseModelAction action);
 
-    public abstract void dispatchUserAction(BaseUserAction action);
 }

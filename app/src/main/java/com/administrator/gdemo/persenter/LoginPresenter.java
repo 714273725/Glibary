@@ -55,8 +55,8 @@ public class LoginPresenter extends GPresenter {
         this.mActivity = context;
         mDispatcher = action -> dispatchUserAction(action);
         mWorkDone = action -> dispatchGModelDone(action);
-        mModel = new LoginModel(mWorkDone);
-        mView = new LoginView(view, mDispatcher);
+        mModel = new LoginModel(this);
+        mView = new LoginView(view, this);
     }
 
     @Override

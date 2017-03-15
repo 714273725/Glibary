@@ -4,12 +4,15 @@ import android.support.v4.app.Fragment;
 import android.view.ViewGroup;
 
 import com.administrator.gdemo.R;
+import com.administrator.gdemo.ui.fragment.FastRefreshFragment;
 import com.administrator.gdemo.ui.fragment.GFragment;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import fast.glibrary.base.BaseActivity;
 import fast.glibrary.base.BaseFragmentTabActivity;
+import fast.glibrary.network.Param;
 import fast.glibrary.uiKit.GViewHolder;
 import fast.glibrary.uiKit.TabIcon;
 
@@ -45,6 +48,9 @@ public class TabFragmentActivity extends BaseFragmentTabActivity {
 
     @Override
     public Fragment getFragmentEntity(int pos) {
+        if (pos == 0) {
+            return new FastRefreshFragment();
+        }
         return new GFragment();
     }
 
@@ -57,5 +63,15 @@ public class TabFragmentActivity extends BaseFragmentTabActivity {
     public TabIcon addTab(int pos) {
         return new TabIcon(mIconSelectIds[pos]
                 , list_title.get(pos), mIconUnselectIds[pos]);
+    }
+
+    @Override
+    public Param getDefaultParams() {
+        return null;
+    }
+
+    @Override
+    public void defaultMethod(BaseActivity activity, Param param) {
+
     }
 }

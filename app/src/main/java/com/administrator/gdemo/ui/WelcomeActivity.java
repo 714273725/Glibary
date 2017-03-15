@@ -37,6 +37,7 @@ import fast.game.library.view.GSurfaceView;
 import fast.game.library.view.HSurfaceView;
 import fast.glibrary.base.BaseActivity;
 import fast.glibrary.base.BaseTabActivity;
+import fast.glibrary.network.Param;
 import fast.glibrary.tools.L;
 import fast.glibrary.uiKit.GViewHolder;
 import fast.glibrary.uiKit.TabIcon;
@@ -58,11 +59,21 @@ public class WelcomeActivity extends BaseActivity {
         this.getWindowManager().getDefaultDisplay().getMetrics(outMetrics);
         GSurfaceView.SCREEN_WIDTH = outMetrics.widthPixels;
         GSurfaceView.SCREEN_HEIGHT = outMetrics.heightPixels;
-        setContentView(new GSurfaceView(getThis()));
+        //setContentView(new GSurfaceView(getThis()));
         new Handler().postDelayed(() -> {
-            start(LoginActivity.class);
+            start(MainActivity.class);
             finish();
-        }, 1);
+        }, 2000);
         //setContentView(R.layout.activity_main);
+    }
+
+    @Override
+    public Param getDefaultParams() {
+        return null;
+    }
+
+    @Override
+    public void defaultMethod(BaseActivity activity, Param param) {
+
     }
 }

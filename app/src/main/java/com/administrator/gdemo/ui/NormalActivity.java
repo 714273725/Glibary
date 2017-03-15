@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 
 import fast.glibrary.base.BaseActivity;
+import fast.glibrary.network.Param;
 
 /**
  * 项目名称：GDemo
@@ -18,5 +19,15 @@ public class NormalActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public Param getDefaultParams() {
+        return null;
+    }
+
+    @Override
+    public void defaultMethod(BaseActivity activity, Param param) {
+
     }
 }

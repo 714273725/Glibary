@@ -17,6 +17,8 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface SaveState {
+    //在保存状态时，将指定的对象转化为Json字符串
+    //这样就指定对象就可以不实现序列化
     int JSON_OBJECT = 1;
     int NORMAL_OBJECT = 0;
 

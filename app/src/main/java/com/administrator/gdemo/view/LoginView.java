@@ -32,6 +32,7 @@ import fast.glibrary.uiKit.GViewHolder;
 import fast.mvp.base.ActionDispatcher;
 import fast.mvp.base.BaseModelAction;
 import fast.mvp.base.BaseUserAction;
+import fast.mvp.persenter.GPresenter;
 import fast.mvp.view.GView;
 
 /**
@@ -43,28 +44,24 @@ import fast.mvp.view.GView;
 public class LoginView extends GView {
     private GViewHolder mHolder;
 
-    public LoginView(View view, ActionDispatcher dispatcher) {
+    public LoginView(View view, GPresenter dispatcher) {
         super(dispatcher);
         this.mHolder = new GViewHolder(view);
         init(view);
     }
 
     private void init(View view) {
-        mHolder.getView(R.id.bt_Login).setOnClickListener(view1 -> userAction(new BaseUserAction(ViewAction.LoginClick)));
+        mHolder.getView(R.id.bt_Login).setOnClickListener(view1 -> mActionDispatcher.dispatchUserAction(new BaseUserAction(ViewAction.LoginClick).setParams(getLoginParams())));
     }
 
-    @Override
-    public void userAction(BaseUserAction action) {
-        mActionDispatcher.doAction(action);
-    }
 
     @Override
-    public void dispatchData(BaseModelAction action, Object data) {
+    public void dispatchData(BaseModelAction action) {
 
     }
 
     @Override
-    public void upDateView(BaseModelAction action, Param params) {
+    public void upDateView(BaseModelAction action) {
 
     }
 

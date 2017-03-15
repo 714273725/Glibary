@@ -37,7 +37,7 @@ public class GLibraryHelper {
         if (!(context instanceof Application)) {
             throw new IllegalArgumentException("context must be application");
         }
-        L.setTag(context.getPackageName());
+        //L.setTag(context.getPackageName());
         mContext = context;
         TS.init(context);
         Fresco.initialize(context);

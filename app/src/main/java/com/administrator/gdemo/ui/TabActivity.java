@@ -9,8 +9,10 @@ import com.administrator.gdemo.R;
 import java.util.ArrayList;
 import java.util.List;
 
+import fast.glibrary.base.BaseActivity;
 import fast.glibrary.base.BaseTabActivity;
 import fast.glibrary.data.DataFatroty;
+import fast.glibrary.network.Param;
 import fast.glibrary.uiKit.GViewHolder;
 import fast.glibrary.uiKit.TabIcon;
 
@@ -73,5 +75,15 @@ public class TabActivity extends BaseTabActivity<String> {
     @Override
     public int[] setIndicatorColor() {
         return new int[]{R.color.bgDivider,R.color.colorAccent};
+    }
+
+    @Override
+    public Param getDefaultParams() {
+        return null;
+    }
+
+    @Override
+    public void defaultMethod(BaseActivity activity, Param param) {
+
     }
 }

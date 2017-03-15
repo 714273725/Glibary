@@ -34,6 +34,7 @@ import fast.mvp.base.BaseModelAction;
 import fast.mvp.base.BaseUserAction;
 import fast.mvp.base.WorkDoneDispatcher;
 import fast.mvp.model.GModel;
+import fast.mvp.persenter.GPresenter;
 
 /**
  * Created by Administrator on 2017/2/18.
@@ -42,8 +43,13 @@ import fast.mvp.model.GModel;
  */
 
 public class LoginModel extends GModel {
-    public LoginModel(WorkDoneDispatcher workDoneDispatcher) {
+    public LoginModel(GPresenter workDoneDispatcher) {
         super(workDoneDispatcher);
+    }
+
+    @Override
+    public void dispatchAction(BaseUserAction action) {
+        dispatchUserAction(action);
     }
 
     @Override
@@ -51,7 +57,6 @@ public class LoginModel extends GModel {
 
     }
 
-    @Override
     public void dispatchUserAction(BaseUserAction action) {
         switch (action.mAction) {
             case ViewAction.LoginClick:
@@ -59,7 +64,7 @@ public class LoginModel extends GModel {
                 NetWorkDispatcher.sendPost(URL.LOGIN, new NetAction(ModelAction.LoginBack), param, new BaseResponseLister() {
                     @Override
                     public void success(int what, Response response, Object o) {
-                        mWorkDoneDispatcher.workDone(new BaseModelAction(what).setParams(o));
+                        mEventDispatcher.dispatchGModelDone(new BaseModelAction(what).setParams(o));
                     }
 
                     @Override

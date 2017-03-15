@@ -35,7 +35,6 @@ public abstract class BaseTabHostActivity<T> extends BaseActivity {
             mHost.addTab(tabSpec, getFragment(i), null);
         }
         mHost.getTabWidget().setDividerDrawable(getResources().getDrawable(android.R.color.white));
-
     }
 
     /**

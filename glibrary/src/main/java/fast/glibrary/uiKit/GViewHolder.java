@@ -1,16 +1,24 @@
 package fast.glibrary.uiKit;
 
+import android.annotation.TargetApi;
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.IdRes;
 import android.support.annotation.StringRes;
 import android.support.v7.widget.RecyclerView;
 import android.util.SparseArray;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.lang.reflect.InvocationTargetException;
 
+import fast.glibrary.R;
 import fast.glibrary.base.adapter.GAdapter;
 import fast.glibrary.uiKit.holder.BaseViewHolder;
+import fast.mvp.view.GView;
 
 /**
  * 项目名称：GDemo
@@ -173,5 +181,72 @@ public class GViewHolder extends RecyclerView.ViewHolder {
             return ((TextView) getView(id)).getText().toString();
         }
         return null;
+    }
+
+    /**
+     * hideView
+     *
+     * @param id
+     */
+    public void hideView(@IdRes int id) {
+        if (getView(id) != null) {
+            getView(id).setVisibility(View.GONE);
+        }
+    }
+
+    /**
+     * showView
+     *
+     * @param id
+     */
+    public GViewHolder showView(@IdRes int id) {
+        if (getView(id) != null) {
+            getView(id).setVisibility(View.VISIBLE);
+        }
+        return this;
+    }
+
+
+    /**
+     * imageView 设置 drawable
+     *
+     * @param drawable {@link Drawable}
+     */
+    public GViewHolder setImageDrawable(@IdRes int id, Drawable drawable) {
+        if (getView(id) instanceof ImageView) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                getView(id).setBackground(drawable);
+            } else {
+                getView(id).setBackgroundDrawable(drawable);
+            }
+        }
+        return this;
+    }
+
+
+    @TargetApi(21)
+    public GViewHolder setImageBackgroundRes(@IdRes int id, @DrawableRes int ids, Resources.Theme theme) {
+        return setImageDrawable(id, getView(id).getResources().getDrawable(ids, theme));
+    }
+
+    /**
+     * imageView 设置 drawable
+     *
+     * @param ids
+     */
+    public GViewHolder setImageBackgroundRes(@IdRes int id, @DrawableRes int ids) {
+        return setImageDrawable(id, getView(id).getResources().getDrawable(ids));
+    }
+
+    /**
+     * 设置点击监听
+     *
+     * @param id
+     * @param listener
+     * @return
+     */
+    public GViewHolder setClick(@IdRes int id, View.OnClickListener listener) {
+        getViewHolder(id).setClick(listener);
+        return this;
     }
 }

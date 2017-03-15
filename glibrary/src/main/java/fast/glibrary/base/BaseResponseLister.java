@@ -3,6 +3,8 @@ package fast.glibrary.base;
 import com.yolanda.nohttp.rest.OnResponseListener;
 import com.yolanda.nohttp.rest.Response;
 
+import fast.glibrary.tools.L;
+
 /**
  * _ooOoo_
  * o8888888o
@@ -39,7 +41,14 @@ public abstract class BaseResponseLister<T> implements OnResponseListener {
 
     @Override
     public void onSucceed(int what, Response response) {
-        success(what, response, (T) response.get());
+        try {
+            success(what, response, (T) response.get());
+        } catch (Exception e) {
+            L.e("☟☟☟报错啦，错啦，啦☟☟0,0,0-,-,-,-0,0,0☟☟☟");
+            e.printStackTrace();
+            L.e("☞☞☞☞☞" + e.getMessage() + "☜☜☜☜☜");
+            L.e("☝☝☝报错啦，错啦，啦☝☝0,0,0-,-,-,-0,0,0☝☝☝");
+        }
     }
 
     @Override

@@ -29,6 +29,7 @@ import com.yolanda.nohttp.Headers;
 import com.yolanda.nohttp.RequestMethod;
 import com.yolanda.nohttp.rest.RestRequest;
 import com.yolanda.nohttp.rest.StringRequest;
+
 import org.json.JSONObject;
 
 /**
@@ -37,6 +38,7 @@ import org.json.JSONObject;
 
 public class BaseRequest extends RestRequest {
     private NetAction mAction;
+
     public BaseRequest(String url, NetAction action, RequestMethod requestMethod) {
         super(url, requestMethod);
         this.mAction = action;
@@ -44,6 +46,7 @@ public class BaseRequest extends RestRequest {
 
     /**
      * 分析请求结果并转化成请求者需要的格式
+     *
      * @param responseHeaders
      * @param responseBody
      * @return
@@ -52,13 +55,18 @@ public class BaseRequest extends RestRequest {
     @Override
     public Object parseResponse(Headers responseHeaders, byte[] responseBody) throws Throwable {
         String jsonStr = StringRequest.parseResponseString(responseHeaders, responseBody);
-        if(mAction.mClz==JSONObject.class){
-            JSONObject jsonObject = new JSONObject(jsonStr);
-            NetWorkDispatcher.getInstance().getConfig().handleData(mAction,jsonObject);
-            return jsonObject;
+        try {
+            if (mAction.mClz == JSONObject.class) {
+                JSONObject jsonObject = new JSONObject(jsonStr);
+                NetWorkDispatcher.getInstance().getConfig().handleData(mAction, jsonObject);
+                return jsonObject;
+            }
+            Object object = JSON.parseObject(jsonStr, mAction.mClz);
+            NetWorkDispatcher.getInstance().getConfig().handleData(mAction, object);
+            return object;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return NetWorkDispatcher.getInstance().getConfig().handleData(mAction, jsonStr);
         }
-        Object object = JSON.parseObject(jsonStr,mAction.mClz);
-        NetWorkDispatcher.getInstance().getConfig().handleData(mAction,object);
-        return object;
     }
 }

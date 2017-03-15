@@ -1,14 +1,20 @@
 package fast.glibrary.uiKit.holder;
 
+import android.annotation.TargetApi;
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.support.annotation.IdRes;
-import android.support.annotation.IntegerRes;
+import android.os.Build;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.StringRes;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
+
+import fast.glibrary.tools.L;
 
 /**
  * 项目名称：GDemo
@@ -20,6 +26,8 @@ import com.facebook.drawee.view.SimpleDraweeView;
  * 修改备注：
  */
 public class BaseViewHolder<T extends View> {
+    public static final String TAG = "BaseViewHolder :";
+
     public BaseViewHolder(T mView) {
         this.mView = mView;
     }
@@ -41,8 +49,17 @@ public class BaseViewHolder<T extends View> {
      * @return {@link View#setEnabled(boolean)}
      */
     public BaseViewHolder setEnable(boolean enable) {
-        mView.setEnabled(enable);
+        if (checkNotNull())
+            mView.setEnabled(enable);
         return this;
+    }
+
+    private boolean checkNotNull() {
+        if (mView == null) {
+            L.e(TAG, "view is null, skipping ");
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -52,7 +69,8 @@ public class BaseViewHolder<T extends View> {
      * @return {@link View#setVisibility(int)}
      */
     public BaseViewHolder setVisibility(int v) {
-        mView.setVisibility(v);
+        if (checkNotNull())
+            mView.setVisibility(v);
         return this;
     }
 
@@ -63,7 +81,8 @@ public class BaseViewHolder<T extends View> {
      * @return {@link View#setVisibility(int)}
      */
     public BaseViewHolder setVisibility(boolean v) {
-        mView.setVisibility(v ? View.VISIBLE : View.GONE);
+        if (checkNotNull())
+            mView.setVisibility(v ? View.VISIBLE : View.GONE);
         return this;
     }
 
@@ -74,7 +93,8 @@ public class BaseViewHolder<T extends View> {
      * @return {@link View#setSelected(boolean)}
      */
     public BaseViewHolder setSelect(boolean selected) {
-        mView.setSelected(selected);
+        if (checkNotNull())
+            mView.setSelected(selected);
         return this;
     }
 
@@ -94,15 +114,16 @@ public class BaseViewHolder<T extends View> {
 
     /**
      * 为SimpleDraweeView设置图片uri
+     * {@link SimpleDraweeView#setImageURI(Uri)}
      *
      * @param uri
-     * @return {@link SimpleDraweeView#setImageURI(Uri)}
+     * @return
      */
     public BaseViewHolder setImageUri(Uri uri) {
         if (uri == null) {
             return this;
         }
-        if (mView instanceof SimpleDraweeView) {
+        if (checkNotNull() && mView instanceof SimpleDraweeView) {
             ((SimpleDraweeView) mView).setImageURI(uri);
         }
         return this;
@@ -115,7 +136,7 @@ public class BaseViewHolder<T extends View> {
      * @return {@link SimpleDraweeView#setAspectRatio(float)}
      */
     public BaseViewHolder setAspectRatio(float ratio) {
-        if (mView instanceof SimpleDraweeView) {
+        if (checkNotNull() && mView instanceof SimpleDraweeView) {
             ((SimpleDraweeView) mView).setAspectRatio(ratio);
         }
         return this;
@@ -128,7 +149,7 @@ public class BaseViewHolder<T extends View> {
      * @return {@link TextView#setText(CharSequence)}
      */
     public BaseViewHolder setText(String text) {
-        if (mView instanceof TextView) {
+        if (checkNotNull() && mView instanceof TextView) {
             ((TextView) mView).setText(TextUtils.isEmpty(text) ? "" : text);
         }
         return this;
@@ -142,7 +163,7 @@ public class BaseViewHolder<T extends View> {
      * @return {@link TextView#setText(int),BaseViewHolder#setText(String)}
      */
     public BaseViewHolder setText(@StringRes int res, boolean format) {
-        if (mView instanceof TextView) {
+        if (checkNotNull() && mView instanceof TextView) {
             if (format) {
                 ((TextView) mView).setText(res);
             } else {
@@ -183,5 +204,65 @@ public class BaseViewHolder<T extends View> {
         return this;
     }
 
+    /**
+     * imageView 设置 drawable
+     *
+     * @param drawable {@link Drawable}
+     */
+    public BaseViewHolder setImageDrawable(Drawable drawable) {
+        if (checkNotNull() && mView instanceof ImageView) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                mView.setBackground(drawable);
+            } else {
+                mView.setBackgroundDrawable(drawable);
+            }
+        }
+        return this;
+    }
 
+
+    @TargetApi(21)
+    public BaseViewHolder setImageBackgroundRes(@DrawableRes int ids, Resources.Theme theme) {
+        return setImageDrawable(mView.getResources().getDrawable(ids, theme));
+    }
+
+    /**
+     * imageView 设置 drawable
+     *
+     * @param ids
+     */
+    public BaseViewHolder setImageBackgroundRes(@DrawableRes int ids) {
+        return setImageDrawable(mView.getResources().getDrawable(ids));
+    }
+
+
+    /**
+     * 隐藏一个视图
+     */
+    public BaseViewHolder hideView() {
+        if (checkNotNull())
+            mView.setVisibility(View.GONE);
+        return this;
+    }
+
+    /**
+     * 显示一个视图
+     */
+    public BaseViewHolder showView() {
+        if (checkNotNull())
+            mView.setVisibility(View.VISIBLE);
+        return this;
+    }
+
+    /**
+     * 设置点击事件
+     *
+     * @param listener
+     * @return
+     */
+    public BaseViewHolder setClick(View.OnClickListener listener) {
+        if (checkNotNull())
+            mView.setOnClickListener(listener);
+        return this;
+    }
 }

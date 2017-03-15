@@ -1,26 +1,25 @@
 package com.administrator.gdemo;
 
+import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.DragEvent;
-import android.view.MotionEvent;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.administrator.gdemo.bean.LoginBean;
 import com.administrator.gdemo.config.URL;
-import com.administrator.gdemo.ui.OverScrollActivity;
 import com.administrator.gdemo.ui.TabActivity;
 import com.administrator.gdemo.ui.TabFragmentActivity;
 import com.administrator.gdemo.ui.TabHostActivity;
-import com.yolanda.nohttp.rest.OnResponseListener;
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.interfaces.DraweeController;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.yolanda.nohttp.rest.Response;
 
-import org.json.JSONObject;
-
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,8 +37,8 @@ import fast.glibrary.network.Param;
 import fast.glibrary.tools.L;
 import fast.glibrary.tools.MD5;
 import fast.glibrary.uiKit.GViewHolder;
-import fast.glibrary.views.refresh.GRefreshLayout;
 import fast.glibrary.weight.GRefresher;
+import fast.glibrary.weight.uiKit.GRStateView;
 
 
 public class MainActivity extends BaseActivity {
@@ -66,13 +65,16 @@ public class MainActivity extends BaseActivity {
     List<String> itemList = new ArrayList<>();
     @BindView(R.id.srl)
     GRefresher srl;
+    @BindView(R.id.siv)
+    SimpleDraweeView mSimpleDraweeView;
 
     {
         itemList.add("TopTabViewPager");
         itemList.add("BottomTabViewPager");
         itemList.add("TabTopFragment");
         itemList.add("TabBottomFragment");
-        itemList.add("OverScroll");
+        itemList.add("TabHostBottomFragment");
+      /*  itemList.add("OverScroll");
         itemList.add("TopTabViewPager");
         itemList.add("BottomTabViewPager");
         itemList.add("TabTopFragment");
@@ -83,14 +85,27 @@ public class MainActivity extends BaseActivity {
         itemList.add("TabTopFragment");
         itemList.add("TabBottomFragment");
         itemList.add("OverScroll");
+        itemList.add("TopTabViewPager");
+        itemList.add("BottomTabViewPager");
+        itemList.add("TabTopFragment");
+        itemList.add("TabBottomFragment");
+        itemList.add("OverScroll");*/
+
     }
+
+    GRStateView header;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        Uri uri = Uri.parse("res://com.administrator.gdemo/" + R.drawable.anim);
+        DraweeController controller = Fresco.newDraweeControllerBuilder()
+                .setUri(uri)
+                .setAutoPlayAnimations(true)
+                .build();
+        mSimpleDraweeView.setController(controller);
         rvList.setLayoutManager(new LinearLayoutManager(getThis()));
         rvList.setAdapter(adapter);
         adapter.setNewData(itemList);
@@ -98,6 +113,65 @@ public class MainActivity extends BaseActivity {
             holder.setText(R.id.tvTitle, data);
             holder.itemView.setTag(pos);
             holder.setImageUrlString(R.id.sdv, DataFatroty.getImage());
+        });
+        header = new GRStateView() {
+            @Override
+            public View getLoadingView() {
+                return LayoutInflater.from(getThis()).inflate(R.layout.header_refreshing, null);
+            }
+
+            @Override
+            public View getHoldingView() {
+                return LayoutInflater.from(getThis()).inflate(R.layout.header_refresh, null);
+            }
+
+            @Override
+            public View getNormalView() {
+                return LayoutInflater.from(getThis()).inflate(R.layout.header_refresh_tips, null);
+            }
+
+            @Override
+            public int getAnimViewId() {
+                return R.id.iv_GRefresher_indicator;
+            }
+        };
+        srl.setHeaderView(header);
+        srl.setFooterView(new GRStateView() {
+            @Override
+            public View getLoadingView() {
+                return LayoutInflater.from(getThis()).inflate(R.layout.header_refreshing, null);
+            }
+
+            @Override
+            public View getHoldingView() {
+                return LayoutInflater.from(getThis()).inflate(R.layout.header_refresh, null);
+            }
+
+            @Override
+            public View getNormalView() {
+                return LayoutInflater.from(getThis()).inflate(R.layout.header_refresh_tips, null);
+            }
+
+            @Override
+            public int getAnimViewId() {
+                return R.id.iv_GRefresher_indicator;
+            }
+        });
+        srl.setPullListener(new GRefresher.PullListener() {
+            @Override
+            public boolean canLoadMore() {
+                return true;
+            }
+
+            @Override
+            public void refresh() {
+                //srl.postDelayed(() -> srl.endRefreshing(), 3000);
+            }
+
+            @Override
+            public void loadMore() {
+                //srl.postDelayed(() -> srl.endLoading(), 3000);
+            }
         });
 
         NetWorkDispatcher.sendPost(URL.LOGIN, new NetAction(1), new Param()
@@ -128,6 +202,11 @@ public class MainActivity extends BaseActivity {
         });
     }
 
+    @Override
+    public Param getDefaultParams() {
+        return null;
+    }
+
 
     private void click(View v) {
         switch ((int) v.getTag()) {
@@ -146,6 +225,14 @@ public class MainActivity extends BaseActivity {
             case 4:
                 start(TabHostActivity.class);
                 break;
+            case 5:
+                start(TabHostActivity.class);
+                break;
         }
+    }
+
+    @Override
+    public void defaultMethod(BaseActivity activity, Param param) {
+
     }
 }

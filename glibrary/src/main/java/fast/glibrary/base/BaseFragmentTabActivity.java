@@ -32,10 +32,10 @@ import fast.glibrary.uiKit.TabIcon;
 public abstract class BaseFragmentTabActivity extends BaseActivity {
 
 
-    ViewPager.OnPageChangeListener mPageChangeListener;
-    TabLayout tab;
-    Toolbar toolbar;
-    ViewPager pager;
+    public ViewPager.OnPageChangeListener mPageChangeListener;
+    public TabLayout tab;
+    public Toolbar toolbar;
+    public ViewPager pager;
     public BaseFragmentPagerAdapter adapter;
 
     @Override
@@ -103,7 +103,7 @@ public abstract class BaseFragmentTabActivity extends BaseActivity {
                     GViewHolder h = new GViewHolder(tab.getCustomView());
                     h.getView(R.id.tabIcon).setSelected(true);
                 }
-                if(tab.getPosition()!=pager.getCurrentItem()){
+                if (tab.getPosition() != pager.getCurrentItem()) {
                     pager.setCurrentItem(tab.getPosition());
                 }
             }
@@ -186,6 +186,7 @@ public abstract class BaseFragmentTabActivity extends BaseActivity {
             }
         }
     }
+
     /**
      * [0] 未选中的字体颜色res
      * [1] 选中的字体颜色的res
@@ -195,6 +196,7 @@ public abstract class BaseFragmentTabActivity extends BaseActivity {
     public int[] setIndicatorColor() {
         return null;
     }
+
     public void addPageChangeListener(ViewPager.OnPageChangeListener pageChangeListener) {
         this.mPageChangeListener = pageChangeListener;
     }

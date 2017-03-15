@@ -3,6 +3,7 @@ package com.administrator.gdemo;
 import android.app.Application;
 
 import com.administrator.gdemo.bean.LoginBean;
+import com.yolanda.nohttp.rest.Request;
 
 import org.json.JSONObject;
 
@@ -10,6 +11,7 @@ import fast.glibrary.base.adapter.BaseAdapter;
 import fast.glibrary.network.NetAction;
 import fast.glibrary.network.NetWorkDispatcher;
 import fast.glibrary.network.Param;
+import fast.glibrary.sp.SecurityStorage;
 import fast.glibrary.tools.GLibraryHelper;
 
 /**
@@ -22,6 +24,7 @@ import fast.glibrary.tools.GLibraryHelper;
  * 修改备注：
  */
 public class App extends Application {
+    SecurityStorage mStorage;
     @Override
     public void onCreate() {
         super.onCreate();
@@ -49,6 +52,11 @@ public class App extends Application {
             }
 
             @Override
+            public void handleRequest(NetAction action, Request request) {
+
+            }
+
+            @Override
             public boolean needDefaultHeader(NetAction action) {
                 return false;
             }
@@ -59,8 +67,8 @@ public class App extends Application {
             }
 
             @Override
-            public void handleData(NetAction action, Object data) {
-
+            public Object handleData(NetAction action, Object data) {
+                return null;
             }
         });
 

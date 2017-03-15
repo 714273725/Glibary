@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:background="@color/white"
-              android:fitsSystemWindows="true"
-              android:gravity="center_vertical"
-              android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/ll_toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:fitsSystemWindows="true"
+    android:gravity="center_vertical"
+    android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -17,13 +18,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:theme="@style/AppTheme.AppBarOverlay"/>
+            android:theme="@style/AppTheme.AppBarOverlay" />
 
         <TextView
             android:id="@+id/tvTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"/>
+            android:layout_centerInParent="true" />
 
         <ImageView
             android:id="@+id/right_bt"
@@ -32,7 +33,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerInParent="true"
             android:layout_marginRight="@dimen/G10dp"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
 
         <TextView
@@ -44,9 +45,8 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/G10dp"
             android:background="@color/white"
-            android:visibility="gone"/>
+            android:visibility="gone" />
     </RelativeLayout>
 
-    <View
-        style="@style/divider"/>
+    <View style="@style/divider" />
 </LinearLayout>

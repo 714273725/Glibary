@@ -16,7 +16,7 @@ public class Param extends HashMap<String, Object> {
         this.put(key, value);
     }
 
-    public Param add(String key, String value) {
+    public Param add(String key, Object value) {
         this.put(key, value);
         return this;
     }

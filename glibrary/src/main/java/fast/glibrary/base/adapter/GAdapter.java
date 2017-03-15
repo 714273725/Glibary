@@ -4,6 +4,7 @@ import android.view.View;
 
 import java.util.List;
 
+import fast.glibrary.tools.L;
 import fast.glibrary.uiKit.GViewHolder;
 
 /**
@@ -19,6 +20,7 @@ public class GAdapter<T> extends BaseAdapter<T, GViewHolder> {
 
 
     GBinder<T> mDataBinder;
+    private static final java.lang.String TAG = "GAdapter :";
 
     public void setDataBinder(GBinder<T> dataBinder) {
         this.mDataBinder = dataBinder;
@@ -32,10 +34,6 @@ public class GAdapter<T> extends BaseAdapter<T, GViewHolder> {
         super(defaultLayoutId);
     }
 
-    public GAdapter(List<T> data) {
-        super(data);
-    }
-
     @Override
     public GViewHolder getHolder(View view) {
         return new GViewHolder(view);
@@ -43,28 +41,47 @@ public class GAdapter<T> extends BaseAdapter<T, GViewHolder> {
 
     @Override
     public boolean bindView(GViewHolder holder, T t, int pos) {
-        if (mDataBinder != null) {
-            mDataBinder.bindData(getLayout(t) == null ? getDefaultLayoutId() : getLayout(t).getViewTypeId(), t, holder, pos, getShowList());
-            return true;
+        try {
+            if (mDataBinder != null) {
+                mDataBinder.bindData(getLayout(t) == null ? getDefaultLayoutId() : getLayout(t).getViewTypeId(), t, holder, pos, getShowList());
+                return true;
+            }
+            return super.bindView(holder, t, pos);
+        } catch (Exception e) {
+            e.printStackTrace();
+            L.e(TAG, "error when binding view");
+            return super.bindView(holder, t, pos);
         }
-        return super.bindView(holder, t, pos);
     }
 
     @Override
     public boolean bindFooter(GViewHolder holder, int footerId) {
-        if (mDataBinder != null) {
-            mDataBinder.bindData(footerId, null, holder, -1, getShowList());
-            return true;
+        try {
+            if (mDataBinder != null) {
+                mDataBinder.bindData(footerId, null, holder, -1, getShowList());
+                return true;
+            }
+            return super.bindFooter(holder, footerId);
+        } catch (Exception e) {
+            e.printStackTrace();
+            L.e(TAG, "error when binding footer");
+            return super.bindFooter(holder, footerId);
         }
-        return super.bindFooter(holder, footerId);
     }
 
     @Override
     public boolean bindHeader(GViewHolder holder, int headerId) {
-        if (mDataBinder != null) {
-            mDataBinder.bindData(headerId, null, holder, -1, getShowList());
-            return true;
+        try {
+            if (mDataBinder != null) {
+                mDataBinder.bindData(headerId, null, holder, -1, getShowList());
+                return true;
+            }
+            return super.bindHeader(holder, headerId);
+        } catch (Exception e) {
+            e.printStackTrace();
+            L.e(TAG, "error when binding head");
+            return super.bindHeader(holder, headerId);
         }
-        return super.bindHeader(holder, headerId);
+
     }
 }

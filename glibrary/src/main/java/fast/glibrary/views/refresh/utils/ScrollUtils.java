@@ -27,7 +27,7 @@ public class ScrollUtils {
     /**
      * 用来判断是否可以下拉
      */
-    public static boolean canChildScrollUp(View mChildView) {
+    public static boolean canChildScrollDown(View mChildView) {
         if (mChildView == null) {
             return false;
         }
@@ -49,7 +49,7 @@ public class ScrollUtils {
      * Whether it is possible for the child view of this layout to scroll down. Override this if the child view is a custom view.
      * 判断是否可以上拉
      */
-    public static boolean canChildScrollDown(View mChildView) {
+    public static boolean canChildScrollUp(View mChildView) {
         if (Build.VERSION.SDK_INT < 14) {
             if (mChildView instanceof AbsListView) {
                 final AbsListView absListView = (AbsListView) mChildView;
@@ -247,6 +247,8 @@ public class ScrollUtils {
             }
         }
     }
+
+
 
     public static void scrollToBottom(View view) {
         if (view instanceof RecyclerView) scrollToBottom((RecyclerView) view);

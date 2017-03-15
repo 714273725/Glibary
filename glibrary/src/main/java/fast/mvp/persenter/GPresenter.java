@@ -32,24 +32,9 @@ import fast.mvp.base.BaseUserAction;
  * Function:
  */
 
-public abstract class GPresenter {
+public abstract class GPresenter implements BasePresenter {
     public GPresenter(Context context) {
         this.mContext = context;
     }
-
     public Context mContext;
-
-    /**
-     * 分发用户行为
-     *
-     * @param action {@link BaseUserAction}
-     */
-    public abstract void dispatchUserAction(BaseUserAction action);
-
-    /**
-     * 分发业务反馈
-     *
-     * @param action {@link BaseModelAction}
-     */
-    public abstract void dispatchGModelDone(BaseModelAction action);
 }

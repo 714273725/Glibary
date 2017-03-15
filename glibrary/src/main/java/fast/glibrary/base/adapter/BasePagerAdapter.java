@@ -17,7 +17,7 @@ import fast.glibrary.uiKit.GViewHolder;
  * 创建时间：2016/12/27 17:02
  * 修改人：Administrator
  * 修改时间：2016/12/27 17:02
- * 修改备注：
+ * 修改备注：快速创建viewpagerAdapter
  */
 public abstract class BasePagerAdapter<T> extends PagerAdapter {
 
@@ -57,7 +57,6 @@ public abstract class BasePagerAdapter<T> extends PagerAdapter {
     public abstract void bindData(ViewGroup container, GViewHolder holder, T t, int position);
 
     public abstract int pagerLayout(int pos);
-
 
 
     @Override

@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">GLibrary</string>
+    <string name="empty_list_data">空空如也~</string>
 </resources>

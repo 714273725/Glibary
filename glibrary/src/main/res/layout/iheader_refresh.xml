@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/iv_GRefresher_indicator"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/side_item"
+        android:layout_toLeftOf="@+id/rl_tips_container"
+        android:src="@mipmap/anrrow" />
+
+    <TextView
+        android:id="@+id/rl_tips_container"
+        android:layout_width="72dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:maxWidth="200dp"
+        android:minHeight="60dp"
+        android:textSize="12dp"
+        android:text="释放立即刷新"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+</RelativeLayout>

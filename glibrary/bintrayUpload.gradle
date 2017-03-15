@@ -1,10 +1,6 @@
 apply plugin: 'com.jfrog.bintray'
 apply plugin: 'com.android.library'
 version = libraryVersion
-android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.1"
-}
 if (project.hasProperty("android")) { // Android libraries
     task sourcesJar(type: Jar) {
         classifier = 'sources'

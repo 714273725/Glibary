@@ -3,6 +3,7 @@ package fast.glibrary.network;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
+import com.yolanda.nohttp.Binary;
 import com.yolanda.nohttp.NoHttp;
 import com.yolanda.nohttp.RequestMethod;
 import com.yolanda.nohttp.rest.OnResponseListener;
@@ -68,6 +69,22 @@ public class NetWorkDispatcher {
         getInstance().dispatchPost(url, action, params, listener);
     }
 
+
+    /**
+     * multiPart
+     * @param url
+     * @param action
+     * @param params
+     * @param listener
+     */
+    public static void sendMultiPart(String url, NetAction action, Param params, OnResponseListener listener) {
+        getInstance().multiPartPost(url, action, params, listener, null);
+    }
+
+    public static void sendMultiPart(String url, NetAction action, Param params, OnResponseListener listener, String fileName) {
+        getInstance().multiPartPost(url, action, params, listener, fileName);
+    }
+
     /**
      * get请求发起者
      *
@@ -80,12 +97,64 @@ public class NetWorkDispatcher {
     }
 
     public static void upLoadFile(String url, NetAction action, Param params, OnResponseListener listener) {
-        getInstance().dispatchPost(url, action, params, listener);
+        upLoadFile(url, action, params, listener, null);
+    }
+
+    public static void upLoadFile(String url, NetAction action, Param params, OnResponseListener listener, String fileName) {
+        getInstance().doUpLoad(url, action, params, listener, fileName);
     }
 
     private void dispatchGet(String url, NetAction action, OnResponseListener listener) {
         doGet(url, action, listener);
     }
+
+    /**
+     * 某些情况下，图片参数可能是可选参数，noHttp在有图片的情况下会将请求设置multiparty
+     * 但是如果没有图片，noHttp不会自动将请求设置为multiparty的，
+     * 这个方法在没有图片的情况下会默认加上1byte的内容以将请求转化为multiparty
+     *
+     * @param url
+     * @param action
+     * @param params
+     * @param listener
+     * @param fileName
+     */
+    public void multiPartPost(String url, NetAction action, Param params, OnResponseListener listener, String fileName) {
+        MultiPartRequest request = new MultiPartRequest(url, action, RequestMethod.POST);
+        checkNotNull(config);
+        if (params != null) {
+            for (String key : params.keySet()) {
+                Object o = params.get(key);
+                if (o instanceof String) {
+                    request.add(key, o.toString());
+                }
+                if (o instanceof File) {
+                    if (fileName != null) {
+                        request.add(fileName, (File) o);
+                    } else {
+                        request.add(key, (File) o);
+                    }
+
+                }
+            }
+            if (!request.hasBinary()) {
+                request.add("empty", new EmptyBinary());
+            }
+        }
+        if (action.mAddDefault) {
+            for (String key : config.getDefaultParams(action).keySet()) {
+                request.add(key, config.getDefaultParams(action).getKey(key).toString());
+            }
+        }
+        if (action.mAddHeader) {
+            for (String key : config.getDefaultHeader(action).keySet()) {
+                request.addHeader(key, config.getDefaultHeader(action).getKey(key).toString());
+            }
+        }
+        config.handleRequest(action, request);
+        doPost(action.mAction, request, listener);
+    }
+
 
     /**
      * 文件上传，可同时提交参数及文件
@@ -97,8 +166,8 @@ public class NetWorkDispatcher {
      * @param params   请求参数
      * @param listener 请求回调
      */
-    private void doUpLoad(String url, NetAction action, Param params, OnResponseListener listener) {
-        Request request = new BaseRequest(url, action, RequestMethod.POST);
+    private void doUpLoad(String url, NetAction action, Param params, OnResponseListener listener, String fileName) {
+        Request request = new MultiPartRequest(url, action, RequestMethod.POST);
         if (params != null) {
             for (String key : params.keySet()) {
                 Object o = params.get(key);
@@ -106,20 +175,29 @@ public class NetWorkDispatcher {
                     request.add(key, o.toString());
                 }
                 if (o instanceof File) {
-                    request.add(key, (File) o);
+                    if (fileName != null) {
+                        request.add(fileName, (File) o);
+                    } else {
+                        request.add(key, (File) o);
+                    }
+
+                }
+                if (o instanceof Binary) {
+                    request.add(key, (Binary) o);
                 }
             }
         }
-        if (action.mAddHeader) {
+        if (action.mAddDefault) {
             for (String key : config.getDefaultParams(action).keySet()) {
                 request.add(key, config.getDefaultParams(action).getKey(key).toString());
             }
         }
-        if (action.mAddDefault) {
+        if (action.mAddHeader) {
             for (String key : config.getDefaultHeader(action).keySet()) {
                 request.addHeader(key, config.getDefaultHeader(action).getKey(key).toString());
             }
         }
+        config.handleRequest(action, request);
         doPost(action.mAction, request, listener);
 
     }
@@ -149,16 +227,17 @@ public class NetWorkDispatcher {
                 request.add(key, params.get(key).toString());
             }
         }
-        if (action.mAddHeader) {
+        if (action.mAddDefault) {
             for (String key : config.getDefaultParams(action).keySet()) {
                 request.add(key, config.getDefaultParams(action).getKey(key).toString());
             }
         }
-        if (action.mAddDefault) {
+        if (action.mAddHeader) {
             for (String key : config.getDefaultHeader(action).keySet()) {
                 request.addHeader(key, config.getDefaultHeader(action).getKey(key).toString());
             }
         }
+        config.handleRequest(action, request);
         doPost(action.mAction, request, listener);
     }
 
@@ -188,7 +267,16 @@ public class NetWorkDispatcher {
         public abstract Class getClz(NetAction action);
 
         /**
-         * 添加公共参数的入口
+         * 所有请求的最后出口，通过这个方法处理后，
+         * 请求将被加入到队列之中
+         *
+         * @param action  {@link NetAction}
+         * @param request {@link Request}
+         */
+        public abstract void handleRequest(NetAction action, Request request);
+
+        /**
+         * 添加公共参数的入口,是否需要加默认请求头
          *
          * @param action {@link NetAction}
          * @return
@@ -196,7 +284,7 @@ public class NetWorkDispatcher {
         public abstract boolean needDefaultHeader(NetAction action);
 
         /**
-         * 添加公共请求头的入口
+         * 添加公共请求头的入口,是否需要加默认参数
          *
          * @param action {@link NetAction}
          * @return
@@ -204,14 +292,24 @@ public class NetWorkDispatcher {
         public abstract boolean needDefaultParams(NetAction action);
 
         /**
-         * 网络访问请求返回来的数据经过格式化处理后，将回调此方法做集中化处理
+         * 所有网络访问请求返回来的数据经过格式化处理后，
+         * 将回调此方法做集中化处理
+         * 即使格式化处理过程中报错了，也会走此方法
+         * 开发者可在此处统一处理
          *
          * @param action {@link NetAction}
          * @param data
          */
-        public abstract void handleData(NetAction action, Object data);
+        public abstract Object handleData(NetAction action, Object data);
     }
 
+    /**
+     * 检查是否初始化，
+     * 或初始化后是否经过不当操作使初始化配置丢失
+     *
+     * @param config
+     * @return
+     */
     private DispatcherConfig checkNotNull(DispatcherConfig config) {
         if (config == null) {
             throw new NullPointerException(GLibraryHelper.getContext()

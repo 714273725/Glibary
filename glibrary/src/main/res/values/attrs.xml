@@ -1,45 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="TextIndentEditText">
-        <attr name="itemSuf" format="reference"/>
+        <attr name="itemSuf" format="reference" />
     </declare-styleable>
 
     <declare-styleable name="BaseItem">
-        <attr name="gType" format="integer"/>
-        <attr name="gNum" format="integer"/>
-        <attr name="gIndex" format="integer"/>
-        <attr name="gCount" format="integer"/>
-        <attr name="gMax" format="integer"/>
-        <attr name="gMin" format="integer"/>
-        <attr name="gFloat" format="float"/>
-        <attr name="gBool" format="boolean"/>
-        <attr name="gCheck" format="boolean"/>
-        <attr name="gName" format="string"/>
-        <attr name="gHint" format="string"/>
-        <attr name="gTitle" format="string"/>
-        <attr name="gContent" format="string"/>
-        <attr name="gDetail" format="string"/>
-        <attr name="gDescription" format="string"/>
-        <attr name="gIcon" format="reference"/>
-        <attr name="gColor" format="reference"/>
-        <attr name="gBg" format="reference"/>
-        <attr name="gChildColor" format="reference"/>
-        <attr name="gRes" format="reference"/>
-        <attr name="gItemVisible" format="reference"/>
-        <attr name="gItemChildVisible" format="reference"/>
-        <attr name="android:inputType"/>
-        <attr name="android:minLines"/>
-        <attr name="android:maxLines"/>
+        <attr name="gType" format="integer" />
+        <attr name="gNum" format="integer" />
+        <attr name="gIndex" format="integer" />
+        <attr name="gCount" format="integer" />
+        <attr name="gMax" format="integer" />
+        <attr name="gMin" format="integer" />
+        <attr name="gFloat" format="float" />
+        <attr name="gBool" format="boolean" />
+        <attr name="gCheck" format="boolean" />
+        <attr name="gName" format="string" />
+        <attr name="gHint" format="string" />
+        <attr name="gTitle" format="string" />
+        <attr name="gContent" format="string" />
+        <attr name="gDetail" format="string" />
+        <attr name="gDescription" format="string" />
+        <attr name="gIcon" format="reference" />
+        <attr name="gColor" format="reference" />
+        <attr name="gBg" format="reference" />
+        <attr name="gChildColor" format="reference" />
+        <attr name="gRes" format="reference" />
+        <attr name="gItemVisible" format="reference" />
+        <attr name="gItemChildVisible" format="reference" />
+        <attr name="android:inputType" />
+        <attr name="android:minLines" />
+        <attr name="android:maxLines" />
     </declare-styleable>
     <declare-styleable name="GItem">
-        <attr name="type" format="integer"/>
+        <attr name="view_type" format="integer" />
     </declare-styleable>
     <declare-styleable name="GRefresher">
-        <attr name="headHeight" format="dimension"/>
-        <attr name="footerHeight" format="dimension"/>
-        <attr name="overScrollHeight" format="dimension"/>
-        <attr name="loadMore" format="boolean"/>
-        <attr name="overScrollable" format="boolean"/>
+        <attr name="headHeight" format="dimension" />
+        <attr name="footerHeight" format="dimension" />
+        <attr name="overScrollHeight" format="dimension" />
+        <attr name="gindicator" format="reference" />
+        <attr name="loadMore" format="boolean" />
+        <attr name="overScrollable" format="boolean" />
+        <attr name="boundsMode" format="enum">
+            <enum name="normal" value="0" />
+            <enum name="onlyTop" value="1" />
+            <enum name="onlyBottom" value="2" />
+            <enum name="both" value="3" />
+        </attr>
     </declare-styleable>
 
 </resources>

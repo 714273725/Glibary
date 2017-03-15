@@ -29,9 +29,10 @@ package fast.glibrary.weight.uiKit;
 
 public enum ScrollState {
     Normal, //正常状态
-    PullingDown, //正在下拉
+    PullingDown, //正在下拉==holding
     UpwardResilience, //向上回弹
     Refreshing, //正在刷新
     PullingUp,  //正在上拉
-    DownwardResilience //向下回弹
+    DownwardResilience, //向下回弹
+    LoadingMore
 }

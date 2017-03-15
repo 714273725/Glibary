@@ -25,6 +25,7 @@ import fast.glibrary.network.Param;
 import fast.mvp.base.ActionDispatcher;
 import fast.mvp.base.BaseModelAction;
 import fast.mvp.base.BaseUserAction;
+import fast.mvp.persenter.GPresenter;
 
 /**
  * Created by Administrator on 2017/2/18.
@@ -32,15 +33,11 @@ import fast.mvp.base.BaseUserAction;
  * Function:
  */
 
-public abstract class GView {
-    public GView(ActionDispatcher actionDispatcher) {
-        this.mActionDispatcher = actionDispatcher;
+public abstract class GView implements BaseViewer {
+    public GView(GPresenter dispatcher) {
+        this.mActionDispatcher = dispatcher;
     }
 
-    public ActionDispatcher mActionDispatcher;
+    public GPresenter mActionDispatcher;
 
-    public abstract void userAction(BaseUserAction action);
-
-    public abstract void dispatchData(BaseModelAction action, Object data);
-    public abstract void upDateView(BaseModelAction action,Param params);
 }

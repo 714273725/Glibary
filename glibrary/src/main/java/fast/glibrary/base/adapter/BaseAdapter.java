@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import fast.glibrary.exception.ErrorUesException;
+import fast.glibrary.tools.L;
 import fast.glibrary.uiKit.GViewHolder;
 import fast.glibrary.uiKit.Layout;
 
@@ -22,27 +23,42 @@ import fast.glibrary.uiKit.Layout;
  * 创建时间：2016/12/22 9:11
  * 修改人：Administrator
  * 修改时间：2016/12/22 9:11
- * 修改备注：
+ * 修改备注：viewType即layoutId
  */
 public abstract class BaseAdapter<T, K extends GViewHolder> extends RecyclerView.Adapter<K> {
     public static final int DefaultLayoutNoInit = -0x000001;
+    //原始数据
     List<T> mData;
+    //用于展示的数据
     List<T> mShowList;
+    //头布局id集合
     SparseArray<Integer> header;
+    //头布局的holder;
+    SparseArray<GViewHolder> mHeaderHolder;
+    //脚部局的holder;
+    SparseArray<GViewHolder> mFooterHolder;
+    //脚部局的id集合
     SparseArray<Integer> footer;
+    //过滤器
     DataFilter<T, K> mDataFilter;
+    //
     SparseArray<Layout> mViewType;
     private int mDefaultLayoutId = DefaultLayoutNoInit;
+
     {
         header = new SparseArray<>();
         footer = new SparseArray<>();
         mViewType = new SparseArray<>();
+        mHeaderHolder = new SparseArray<>();
+        mFooterHolder = new SparseArray<>();
     }
+
     public BaseAdapter(int mDefaultLayoutId, List<T> mData) {
         this.mDefaultLayoutId = mDefaultLayoutId;
         this.mData = mData;
         init();
     }
+
     public BaseAdapter(int defaultLayoutId) {
         this.mDefaultLayoutId = defaultLayoutId;
         if (mData == null) {
@@ -51,17 +67,17 @@ public abstract class BaseAdapter<T, K extends GViewHolder> extends RecyclerView
         init();
     }
 
-    public BaseAdapter(List<T> data) {
-        this.mData = data;
-        init();
-    }
-
+    /**
+     * 过滤不用显示的数据
+     */
     private void init() {
         this.mShowList = filter(mData);
     }
+
     public List<T> getData() {
         return mData;
     }
+
     public List<T> getShowList() {
         return mShowList;
     }
@@ -101,6 +117,12 @@ public abstract class BaseAdapter<T, K extends GViewHolder> extends RecyclerView
         notifyItemRemoved(getListSize(header) + pos);
     }
 
+    /**
+     * 过滤不显示的数据
+     *
+     * @param source
+     * @return
+     */
     public List<T> filter(List<T> source) {
         List<T> list = new ArrayList<>();
         if (source == null) {
@@ -151,37 +173,51 @@ public abstract class BaseAdapter<T, K extends GViewHolder> extends RecyclerView
 
     @Override
     public K onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(viewType, parent, false);
-
-        K holder = getHolder(view);
-        /**
-         * 存的时候key=viewType-1，所以在取的时候key=viewType+1
-         */
-        if (header.get(viewType - 1) != null) {
-            onCreatingHeader(holder,viewType);
-        } else
-        /**
-         * 存的时候key=viewType+1，所以在取的时候key=viewType-1
-         */
-            if (footer.get(viewType + 1) != null) {
-                onCreatingFooter(holder,viewType);
-            } else {
-                onCreatingHolder(holder,viewType);
-            }
-        return holder;
+        K holder = null;
+        try {
+            View view = LayoutInflater.from(parent.getContext())
+                    .inflate(viewType, parent, false);
+            holder = getHolder(view);
+            /**
+             * 存的时候key=viewType-1，所以在取的时候key=viewType+1
+             */
+            if (header.get(viewType - 1) != null) {
+                onCreatingHeader(holder, viewType);
+            } else
+            /**
+             * 存的时候key=viewType+1，所以在取的时候key=viewType-1
+             */
+                if (footer.get(viewType + 1) != null) {
+                    onCreatingFooter(holder, viewType);
+                } else {
+                    onCreatingHolder(holder, viewType);
+                }
+        } catch (Exception e) {
+            L.e("error when creating viewHolder");
+            e.printStackTrace();
+        } finally {
+            return holder;
+        }
     }
 
-    public void onCreatingHeader(K holder,int viewType) {
-
+    public GViewHolder getHeadViewHolder(int layoutId) {
+        return mHeaderHolder.get(layoutId);
     }
 
-    public void onCreatingFooter(K holder,int viewType) {
+    public GViewHolder getFooterViewHolder(int layoutId) {
+        return mFooterHolder.get(layoutId);
+    }
 
+    public void onCreatingHeader(K holder, int viewType) {
+        mHeaderHolder.put(viewType, holder);
+    }
+
+    public void onCreatingFooter(K holder, int viewType) {
+        mFooterHolder.put(viewType, holder);
     }
 
 
-    public void onCreatingHolder(K holder,int viewType) {
+    public void onCreatingHolder(K holder, int viewType) {
 
     }
 
@@ -194,15 +230,21 @@ public abstract class BaseAdapter<T, K extends GViewHolder> extends RecyclerView
 
     @Override
     public void onBindViewHolder(K holder, int position) {
-        if (getListSize(header) > 0 && position < getListSize(header)) {
-            bindHeader(holder, getItemViewType(position));
-        } else if (getListSize(footer) > 0 && position >= mShowList.size()) {
-            bindFooter(holder, getItemViewType(position));
-        } else {
-            bindView(holder,
-                    mShowList.get(position - header.size()),
-                    position - header.size());
+        try {
+            if (getListSize(header) > 0 && position < getListSize(header)) {
+                bindHeader(holder, getItemViewType(position));
+            } else if (getListSize(footer) > 0 && position >= mShowList.size()) {
+                bindFooter(holder, getItemViewType(position));
+            } else {
+                bindView(holder,
+                        mShowList.get(position - header.size()),
+                        position - header.size());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            L.e("error when binding holder");
         }
+
     }
 
     public boolean bindView(K holder, T t, int pos) {
@@ -220,24 +262,30 @@ public abstract class BaseAdapter<T, K extends GViewHolder> extends RecyclerView
 
     @Override
     public int getItemCount() {
-        return header.size()
-                + footer.size()
-                + (mShowList == null ? 0 : mShowList.size());
+        return getListSize(header)
+                + getListSize(footer)
+                + getListSize(mShowList);
     }
 
     @Override
     public int getItemViewType(int position) {
-        if (getListSize(header) > 0 && position < getListSize(header)) {
-            return header.get(header.keyAt(position));
-        } else if (getListSize(footer) > 0 && position >= getListSize(mShowList)) {
-            return footer.get(footer.keyAt(position - mShowList.size() - header.size()));
-        }
-        if (getLayout(mShowList.get(position - header.size())) == null
-                && mDefaultLayoutId == DefaultLayoutNoInit) {
-            throw new ErrorUesException("必须重写getViewType()方法 或初始化一个默认的layout id");
-        }
-        if (getLayout(mShowList.get(position - header.size())) != null) {
-            return getLayout(mShowList.get(position - header.size())).getViewTypeId();
+        try {
+            if (getListSize(header) > 0 && position < getListSize(header)) {
+                return header.get(header.keyAt(position));
+            } else if (getListSize(footer) > 0 && position >= getListSize(mShowList)) {
+                return footer.get(footer.keyAt(position - mShowList.size() - header.size()));
+            }
+            if (getLayout(mShowList.get(position - header.size())) == null
+                    && mDefaultLayoutId == DefaultLayoutNoInit) {
+                throw new ErrorUesException("必须重写getViewType()方法 或初始化一个默认的layout id");
+            }
+            if (getLayout(mShowList.get(position - header.size())) != null) {
+                return getLayout(mShowList.get(position - header.size())).getViewTypeId();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            L.e("error when getting viewType");
+            return mDefaultLayoutId;
         }
         return mDefaultLayoutId;
     }

@@ -28,6 +28,7 @@ import com.administrator.gdemo.R;
 import com.administrator.gdemo.persenter.LoginPresenter;
 
 import fast.glibrary.base.BaseActivity;
+import fast.glibrary.network.Param;
 
 /**
  * Created by Administrator on 2017/2/18.
@@ -42,6 +43,17 @@ public class LoginActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        mP = new LoginPresenter(getThis(), getWindow().getDecorView());
+        //mP = new LoginPresenter(getThis(), getWindow().getDecorView());
+
+    }
+
+    @Override
+    public Param getDefaultParams() {
+        return null;
+    }
+
+    @Override
+    public void defaultMethod(BaseActivity activity, Param param) {
+
     }
 }
