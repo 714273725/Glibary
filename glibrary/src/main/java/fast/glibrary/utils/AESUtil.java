@@ -1,9 +1,11 @@
 package fast.glibrary.utils;
 
 
+import android.os.Build;
 
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.security.Provider;
 import java.security.SecureRandom;
 
 import javax.crypto.Cipher;
@@ -18,7 +20,12 @@ public class AESUtil {
 
     public static SecretKeySpec getSecretKeySpec(byte[] password, int keySize) {
         try {
-            SecureRandom random = SecureRandom.getInstance("SHA1PRNG", "Crypto");
+            SecureRandom random;
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+                random = SecureRandom.getInstance("SHA1PRNG", "Crypto");
+            } else {
+                random = SecureRandom.getInstance("SHA1PRNG", new Crypto());
+            }
             random.setSeed(password);
 
             KeyGenerator kgen = KeyGenerator.getInstance(KEY_ALGORTHM);
@@ -87,4 +94,12 @@ public class AESUtil {
         }
     }
 
+    public static final class Crypto extends Provider {
+        public Crypto() {
+            super("Crypto", 1.0, "HARMONY (SHA1 digest; SecureRandom; SHA1withDSA signature)");
+            put("SecureRandom.SHA1PRNG",
+                    "org.apache.harmony.security.provider.crypto.SHA1PRNG_SecureRandomImpl");
+            put("SecureRandom.SHA1PRNG ImplementedIn", "Software");
+        }
+    }
 }
